@@ -46,7 +46,7 @@ spring:
     timeout: 1000ms
   #kafka
   kafka:
-      bootstrap-servers: xx.xx.xx:9092
+      bootstrap-servers: 121.199.164.16:9092
       # producer 生产者
       producer:
         # 重试次数
@@ -92,7 +92,7 @@ logging:
 #     logback.xml路径，默认为classpath:logback.xml
 #     config: ./logback.xml
 rocketmq:
-  name-server: xx.xx.xx:9876
+  name-server: 121.199.164.16:9876
   producer:
     group: test-group
     # 超时时长 默认值
