@@ -1,9 +1,11 @@
 #端口
 server:
-  port: 8888
+  port: 8080
 
 #数据库连接
 spring:
+  application:
+    name: tail
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/trial?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
@@ -42,6 +44,35 @@ spring:
         min-idle: 1
     # 连接超时时间（毫秒）
     timeout: 1000ms
+  #kafka
+  kafka:
+      bootstrap-servers: xx.xx.xx:9092
+      # producer 生产者
+      producer:
+        # 重试次数
+        retries: 0
+        # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
+        # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+        # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+        # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+        acks: -1
+        batch-size: 16384 # 批量大小
+        buffer-memory: 33554432 # 生产端缓冲区大小
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # consumer消费者
+      consumer:
+        # 默认的消费组ID
+        group-id: test-consumer-group
+        # 是否自动提交offset
+        enable-auto-commit: false
+        # 当kafka中没有初始offset或offset超出范围时将自动重置offset;
+        # earliest:重置为分区中最小的offset;
+        # latest:重置为分区中最新的offset(消费分区中新产生的数据);
+        # none:只要有一个分区不存在已提交的offset,就抛出异常;
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
 # mybitis
 mybatis:
   mapperLocations: classpath:mapper/*.xml
@@ -60,4 +91,11 @@ logging:
 #     path: ./log
 #     logback.xml路径，默认为classpath:logback.xml
 #     config: ./logback.xml
-
+rocketmq:
+  name-server: xx.xx.xx:9876
+  producer:
+    group: test-group
+    # 超时时长 默认值
+    send-message-timeout: 3000
+    # 失败重试 默认值
+    retry-times-when-send-failed: 2
