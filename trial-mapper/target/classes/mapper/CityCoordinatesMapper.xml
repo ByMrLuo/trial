@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trial.mapper.CityCoordinatesMapper">
+    <resultMap id="BaseResultMap" type="com.trial.pojo.CityCoordinates">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="city_name" jdbcType="VARCHAR" property="cityName"/>
+        <result column="longitude" jdbcType="DOUBLE" property="longitude"/>
+        <result column="latitude" jdbcType="DOUBLE" property="latitude"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <insert id="inserCityCoordinates" parameterType="java.util.List">
+        INSERT INTO city_coordinates
+        (city_name, longitude, latitude, create_time, update_time)
+        VALUES
+        <foreach collection="geosList" separator="," item="geo">
+            (#{geo.cityName}, #{geo.longitude}, #{geo.latitude}, #{geo.createTime}, #{geo.updateTime})
+        </foreach>
+    </insert>
+
+    <select id="selectAllGeo" resultMap="BaseResultMap">
+        SELECT city_name, longitude, latitude
+        FROM city_coordinates
+    </select>
+</mapper>
