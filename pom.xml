@@ -14,6 +14,7 @@
         <module>trial-mapper</module>
         <module>trial-pojo</module>
         <module>trial-utils</module>
+        <module>trail-api</module>
     </modules>
 
     <parent>
@@ -22,9 +23,18 @@
         <version>2.3.12.RELEASE</version>
     </parent>
 
-    <properties>
-        <spring.cloud-version>Hoxton.SR8</spring.cloud-version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!--springcloud組件版本约束-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR8</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!--web模块-->
@@ -58,13 +68,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--zookeeper-->
-        <!--zkclient-->
-        <dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
-            <version>0.1</version>
-        </dependency>
         <!--dubbo-->
         <dependency>
             <groupId>com.alibaba.spring.boot</groupId>
@@ -86,27 +89,23 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-        <!--spring cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring.cloud-version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
+        <!--spring cloud 组件-->
         <!--openfeign-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>2.2.10.RELEASE</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-openfeign</artifactId>-->
-            <!--<version>3.0.5-SNAPSHOT</version>-->
-        <!--</dependency>-->
-
-
+        <!--ribbon-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+        zk
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-zookeeper</artifactId>
+        </dependency>
+        <!---->
         <!--测试模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,18 +123,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.59</version>
-        </dependency>
-        <!--rocketmq 注意： 这里的版本,要和部署在服务器上的版本号一致-->
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
-            <version>4.8.0</version>
-        </dependency>
-
     </dependencies>
 
     <!--maven-->

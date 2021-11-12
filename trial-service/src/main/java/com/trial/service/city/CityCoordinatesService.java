@@ -1,7 +1,6 @@
 package com.trial.service.city;
 
 import com.trial.pojo.CityCoordinates;
-import com.trial.pojo.Geo;
 
 import java.util.List;
 
