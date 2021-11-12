@@ -1,6 +1,6 @@
 #端口
 server:
-  port: 8080
+  port: 8888
 
 #数据库连接
 spring:
@@ -72,6 +72,10 @@ spring:
         # none:只要有一个分区不存在已提交的offset,就抛出异常;
         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
         value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+# cloud中的zk配置
+  cloud:
+    zookeeper:
+      connect-string: 121.199.164.16:2181
 
 # mybitis
 mybatis:
