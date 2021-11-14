@@ -9,17 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trial-application-service</artifactId>
+    <artifactId>trial-domain-service</artifactId>
 
     <dependencies>
         <dependency>
-            <artifactId>trial-domain-service</artifactId>
+            <artifactId>trail-domain-repository</artifactId>
             <groupId>com.luo.trial</groupId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.luo.trial</groupId>
-            <artifactId>trial-domain-event</artifactId>
             <version>1.5-SNAPSHOT</version>
         </dependency>
     </dependencies>

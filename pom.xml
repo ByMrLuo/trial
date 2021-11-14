@@ -11,13 +11,14 @@
     <modules>
         <module>trial-user_interface-controller</module>
         <module>trial-application-service</module>
-        <module>trial-domain-event</module>
+        <module>trial-domain-service</module>
         <module>trail-domain-factory</module>
         <module>trail-domain-repository</module>
         <module>trial-infrastructure-mapper</module>
         <module>trial-infrastructure-api</module>
         <module>trial-infrastructure-pojo</module>
         <module>trial-infrastructure-utils</module>
+        <module>trial-domain-event</module>
     </modules>
 
     <parent>

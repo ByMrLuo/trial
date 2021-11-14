@@ -11,12 +11,5 @@
 
     <artifactId>trial-domain-event</artifactId>
 
-    <dependencies>
-        <dependency>
-            <artifactId>trail-domain-repository</artifactId>
-            <groupId>com.luo.trial</groupId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
 </project>
