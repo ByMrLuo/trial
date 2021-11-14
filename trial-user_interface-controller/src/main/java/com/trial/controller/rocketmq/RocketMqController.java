@@ -1,5 +1,6 @@
 package com.trial.controller.rocketmq;
 
+import com.trial.service.rocketmq.MessageEventService;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RocketMqController {
 
     @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+    private MessageEventService messageEventService;
 
     @GetMapping("/sendMessage")
     public String sendMessage(){
-
-        rocketMQTemplate.convertAndSend("tail_test_topic", "我来了我来了");
-        return "Succsee";
+        return messageEventService.sendMessage("tail_test_topic", "我来了我来了");
     }
 
 
