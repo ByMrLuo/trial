@@ -17,6 +17,11 @@
             <groupId>com.luo.trial</groupId>
             <version>1.5-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <artifactId>trial-domain-event</artifactId>
+            <groupId>com.luo.trial</groupId>
+            <version>1.5-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

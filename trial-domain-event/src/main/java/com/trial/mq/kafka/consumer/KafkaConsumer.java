@@ -1,4 +1,4 @@
-package com.trial.mq.kafka;
+package com.trial.mq.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
