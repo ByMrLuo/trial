@@ -125,7 +125,12 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.13</version>
         </dependency>
-        <!---->
+        <!--lommbok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+        </dependency>
         <!--测试模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

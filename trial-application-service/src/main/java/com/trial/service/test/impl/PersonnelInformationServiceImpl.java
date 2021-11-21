@@ -16,7 +16,13 @@ public class PersonnelInformationServiceImpl implements PersonnelInformationServ
 
     @Autowired
     private PersonnelInformationMapper personnelInformationMapper;
-
+    /**
+     * @description:
+     * @param
+     * @return com.trial.pojo.PersonnelInformation
+     * @author Mr.Luo
+     * @date 2021/11/21 23:10
+     */
     @Override
     public PersonnelInformation select() {
         PersonnelInformation personnelInformation = personnelInformationMapper.select();
