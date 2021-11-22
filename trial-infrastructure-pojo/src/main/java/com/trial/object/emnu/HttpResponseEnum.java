@@ -1,6 +1,4 @@
-package com.trial.pojo.emnu;
-
-import lombok.Data;
+package com.trial.object.emnu;
 
 /**
  * @方法说明: 返回枚举

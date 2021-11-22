@@ -1,4 +1,4 @@
-package com.trial.pojo;
+package com.trial.object.pojo;
 
 import java.io.Serializable;
 import java.util.Date;

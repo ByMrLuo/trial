@@ -29,7 +29,7 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址,端口
-    host: 121.199.164.16
+    host: xxx.xxx.xxx.xxx
     port: 6379
     # Redis服务器连接密码（默认为空）
     password:
@@ -46,7 +46,7 @@ spring:
     timeout: 1000ms
   #kafka
   kafka:
-      bootstrap-servers: 121.199.164.16:9092
+      bootstrap-servers: xxx.xxx.xxx.xxx:9092
       # producer 生产者
       producer:
         # 重试次数
@@ -75,7 +75,7 @@ spring:
 # cloud中的zk配置
   cloud:
     zookeeper:
-      connect-string: 121.199.164.16:2181
+      connect-string: xxx.xxx.xxx.xxx:2181
 
 # mybitis
 mybatis:
@@ -96,7 +96,7 @@ logging:
 #     logback.xml路径，默认为classpath:logback.xml
 #     config: ./logback.xml
 rocketmq:
-  name-server: 121.199.164.16:9876
+  name-server: xxx.xxx.xxx.xxx:9876
   producer:
     group: test-group
     # 超时时长 默认值

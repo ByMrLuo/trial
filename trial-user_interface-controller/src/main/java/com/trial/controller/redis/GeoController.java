@@ -1,28 +1,19 @@
 package com.trial.controller.redis;
 
-import com.alibaba.fastjson.JSONArray;
-import com.google.common.io.LittleEndianDataInputStream;
-import com.trial.pojo.CityCoordinates;
-import com.trial.pojo.Geo;
-import com.trial.pojo.PersonnelInformation;
-import com.trial.pojo.emnu.HttpResponseEnum;
-import com.trial.pojo.http.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.trial.object.vo.HttpResponse;
 import com.trial.service.city.impl.CityCoordinatesServiceImpl;
-import com.trial.service.test.PersonnelInformationService;
-import com.trial.service.test.impl.PersonnelInformationServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
-import org.springframework.data.redis.core.BoundGeoOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,8 +56,7 @@ public class GeoController {
 
         HttpResponse httpResponse = cityCoordinatesService.insertCityCoordinates();
 
-        System.out.println(list);
-
+        System.out.println(JSONObject.toJSONString(httpResponse));
         return httpResponse;
     }
     /**
@@ -78,14 +68,14 @@ public class GeoController {
      */
     @GetMapping("/redisAdd")
     public String redisAdd(){
-        List<CityCoordinates> cityCoordinates = cityCoordinatesService.selectAllGeo();
-        HashMap<String, Point> map = new HashMap<>();
-        cityCoordinates.forEach(cityCoordinaty -> {
-            Point point = new Point(cityCoordinaty.getLongitude(), cityCoordinaty.getLatitude());
-            map.put(cityCoordinaty.getCityName(), point);
-        });
-        BoundGeoOperations boundGeoOperations = redisTemplate.boundGeoOps(GEO_KEY);
-        boundGeoOperations.add(map);
+//        List<CityCoordinates> cityCoordinates = cityCoordinatesService.selectAllGeo();
+//        HashMap<String, Point> map = new HashMap<>();
+//        cityCoordinates.forEach(cityCoordinaty -> {
+//            Point point = new Point(cityCoordinaty.getLongitude(), cityCoordinaty.getLatitude());
+//            map.put(cityCoordinaty.getCityName(), point);
+//        });
+//        BoundGeoOperations boundGeoOperations = redisTemplate.boundGeoOps(GEO_KEY);
+//        boundGeoOperations.add(map);
         return "缓存完毕";
     }
 

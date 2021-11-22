@@ -1,8 +1,6 @@
 package com.trial.service.city.impl;
 
-import com.trial.mapper.CityCoordinatesMapper;
-import com.trial.pojo.CityCoordinates;
-import com.trial.pojo.http.HttpResponse;
+import com.trial.object.vo.HttpResponse;
 import com.trial.service.city.CityCoordinatesService;
 import com.trial.service.citycoordinates.CityCoordinatesOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +26,15 @@ public class CityCoordinatesServiceImpl implements CityCoordinatesService {
      * @description:这里只是单纯的录入，因为导入城市坐标这个东西不会这么导入的
      * 在据合中此处只有逻辑流程而不是逻辑实现
      * @param
-     * @return com.trial.pojo.http.HttpResponse
+     * @return HttpResponse
      * @author Mr.Luo
      * @date 2021/11/21 23:45
      */
     @Override
     public HttpResponse insertCityCoordinates() {
         //两部操作，1.存入数据库2.存入缓存，供给计算周围的城市使用
-        cityCoordinatesOperationServiceImpl.insertCityCoordinates();
-        return null;
+        HttpResponse<List> listHttpResponse = cityCoordinatesOperationServiceImpl.insertCityCoordinates();
+        return listHttpResponse;
     }
 
 //    @Override

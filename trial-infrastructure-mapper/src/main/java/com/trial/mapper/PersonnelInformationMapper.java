@@ -1,6 +1,6 @@
 package com.trial.mapper;
 
-import com.trial.pojo.PersonnelInformation;
+import com.trial.object.pojo.PersonnelInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

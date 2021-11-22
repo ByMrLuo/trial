@@ -1,8 +1,7 @@
 package com.trial.repository;
 
 import com.trial.factory.CityCoordinatesOperationFactory;
-import com.trial.mapper.CityCoordinatesMapper;
-import com.trial.pojo.CityCoordinates;
+import com.trial.object.pojo.CityCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

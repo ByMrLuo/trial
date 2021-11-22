@@ -1,6 +1,6 @@
 package com.trial.mapper;
 
-import com.trial.pojo.CityCoordinates;
+import com.trial.object.pojo.CityCoordinates;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,7 +24,7 @@ public interface CityCoordinatesMapper {
     /**
      * 功能描述:获取所有坐标
      * @param
-     * @return: java.util.List<com.trial.pojo.CityCoordinates>
+     * @return: java.util.List<com.trial.object.pojo.CityCoordinates>
      * @auther: luoziwen
      * @date: 2020/7/27 18:46
      */

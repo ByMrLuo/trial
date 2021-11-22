@@ -1,9 +1,6 @@
 package com.trial.service.city;
 
-import com.trial.pojo.CityCoordinates;
-import com.trial.pojo.http.HttpResponse;
-
-import java.util.List;
+import com.trial.object.vo.HttpResponse;
 
 /**
  * @description:
@@ -31,7 +28,7 @@ public interface CityCoordinatesService {
 //    /**
 //     * 功能描述: 获取所有的坐标信息
 //     * @param
-//     * @return: java.util.List<com.trial.pojo.CityCoordinates>
+//     * @return: java.util.List<com.trial.object.pojo.CityCoordinates>
 //     * @auther: luoziwen
 //     * @date: 2020/7/27 18:45
 //     */

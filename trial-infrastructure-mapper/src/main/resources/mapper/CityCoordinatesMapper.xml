@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.trial.mapper.CityCoordinatesMapper">
-    <resultMap id="BaseResultMap" type="com.trial.pojo.CityCoordinates">
+    <resultMap id="BaseResultMap" type="com.trial.object.pojo.CityCoordinates">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="city_name" jdbcType="VARCHAR" property="cityName"/>
         <result column="longitude" jdbcType="DOUBLE" property="longitude"/>

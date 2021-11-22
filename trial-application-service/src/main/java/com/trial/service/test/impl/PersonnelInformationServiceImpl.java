@@ -1,7 +1,7 @@
 package com.trial.service.test.impl;
 
 import com.trial.mapper.PersonnelInformationMapper;
-import com.trial.pojo.PersonnelInformation;
+import com.trial.object.pojo.PersonnelInformation;
 import com.trial.service.test.PersonnelInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class PersonnelInformationServiceImpl implements PersonnelInformationServ
     /**
      * @description:
      * @param
-     * @return com.trial.pojo.PersonnelInformation
+     * @return com.trial.object.pojo.PersonnelInformation
      * @author Mr.Luo
      * @date 2021/11/21 23:10
      */

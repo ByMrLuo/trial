@@ -1,6 +1,6 @@
 package com.trial.service.test;
 
-import com.trial.pojo.PersonnelInformation;
+import com.trial.object.pojo.PersonnelInformation;
 
 /**
  * @description:
