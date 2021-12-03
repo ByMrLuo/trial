@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <artifactId>trail-domain-repository</artifactId>
+            <artifactId>trail-domain-factory</artifactId>
             <groupId>com.luo.trial</groupId>
             <version>1.5-SNAPSHOT</version>
         </dependency>

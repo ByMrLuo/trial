@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description: 省市经纬度实体类
+ * @description: 省市经纬度实体类模型与数据库保持一致，但不参与任何业务逻辑
  * @date: 2020/7/27 15:27
  * @author: luoziwen
  */

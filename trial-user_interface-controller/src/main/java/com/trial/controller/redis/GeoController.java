@@ -35,10 +35,6 @@ public class GeoController {
     @Autowired
     private CityCoordinatesServiceImpl cityCoordinatesService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    private static final String GEO_KEY = "cityCoordinates";
     /**
      * 功能描述:向数据库插入各省市坐标
      * @param
@@ -49,10 +45,6 @@ public class GeoController {
      */
     @GetMapping("/insertGeo")
     public HttpResponse inserCityCoordinates(){
-//        PersonnelInformation personnelInformation= personnelInformationService.select();
-//        System.out.println(personnelInformation);
-//        redisTemplate.opsForValue().set("123456", 123456);
-//        String strKey1 = redisTemplate.opsForValue().get("123456").toString();
 
         HttpResponse httpResponse = cityCoordinatesService.insertCityCoordinates();
 
@@ -68,14 +60,9 @@ public class GeoController {
      */
     @GetMapping("/redisAdd")
     public String redisAdd(){
-//        List<CityCoordinates> cityCoordinates = cityCoordinatesService.selectAllGeo();
-//        HashMap<String, Point> map = new HashMap<>();
-//        cityCoordinates.forEach(cityCoordinaty -> {
-//            Point point = new Point(cityCoordinaty.getLongitude(), cityCoordinaty.getLatitude());
-//            map.put(cityCoordinaty.getCityName(), point);
-//        });
-//        BoundGeoOperations boundGeoOperations = redisTemplate.boundGeoOps(GEO_KEY);
-//        boundGeoOperations.add(map);
+
+
+
         return "缓存完毕";
     }
 
@@ -96,24 +83,24 @@ public class GeoController {
                 .newGeoRadiusArgs().includeDistance()
                 .includeCoordinates().sortAscending().limit(20);
         //参数分别为坐标集key键，所选的为圆心的覆盖范围，还有redis的操作命令，获得结果集
-        GeoResults<RedisGeoCommands.GeoLocation<String>> radius = redisTemplate.opsForGeo().radius(GEO_KEY, circle, geoRadiusCommandArgs);
+//        GeoResults<RedisGeoCommands.GeoLocation<String>> radius = redisTemplate.opsForGeo().radius(GEO_KEY, circle, geoRadiusCommandArgs);
         ArrayList<Object> list = new ArrayList<>();
-        if (radius != null) {
-            radius.forEach(geoLocationGeoResult -> {
-                HashMap map = new HashMap<>();
-                RedisGeoCommands.GeoLocation<String> content = geoLocationGeoResult.getContent();
-                //member 名称  如  tianjin
-                String name = content.getName();
-                // 对应的经纬度坐标
-                Point pos = content.getPoint();
-                // 距离中心点的距离
-                Distance dis = geoLocationGeoResult.getDistance();
-                map.put("pos", pos);
-                map.put("dis", dis);
-                map.put("name", name);
-                list.add(map);
-            });
-        }
+//        if (radius != null) {
+//            radius.forEach(geoLocationGeoResult -> {
+//                HashMap map = new HashMap<>();
+//                RedisGeoCommands.GeoLocation<String> content = geoLocationGeoResult.getContent();
+//                //member 名称  如  tianjin
+//                String name = content.getName();
+//                // 对应的经纬度坐标
+//                Point pos = content.getPoint();
+//                // 距离中心点的距离
+//                Distance dis = geoLocationGeoResult.getDistance();
+//                map.put("pos", pos);
+//                map.put("dis", dis);
+//                map.put("name", name);
+//                list.add(map);
+//            });
+//        }
         return list;
     }
 }

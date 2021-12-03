@@ -12,8 +12,9 @@
     <artifactId>trail-domain-factory</artifactId>
 
     <dependencies>
+
         <dependency>
-            <artifactId>trial-infrastructure-mapper</artifactId>
+            <artifactId>trail-domain-repository</artifactId>
             <groupId>com.luo.trial</groupId>
             <version>1.5-SNAPSHOT</version>
         </dependency>
