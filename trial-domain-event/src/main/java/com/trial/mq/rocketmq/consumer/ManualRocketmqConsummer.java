@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @date: 2021/12/28 16:21
  * @author: luoziwen
  */
-@Component("rocketmqConsummer")
+//@Component("rocketmqConsummer")
 public class ManualRocketmqConsummer {
 
     @PostConstruct

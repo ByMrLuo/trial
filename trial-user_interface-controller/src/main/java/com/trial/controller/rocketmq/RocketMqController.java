@@ -1,5 +1,6 @@
 package com.trial.controller.rocketmq;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.trial.service.sendtmq.MessageEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,11 @@ public class RocketMqController {
         return messageEventService.rocketMqSendMessage("tail_test_topic:test-group", "rocketmq,我来了");
     }
 
-
+    /**
+     * @description
+     * @author Mr.Luo
+     * @date 2021/12/05 20:05
+     */
     @GetMapping(value = "/kafka/sendMessage")
     public String kafkaSendMessage() throws Exception{
 
@@ -41,7 +46,7 @@ public class RocketMqController {
 //        return messageEventService.rocketMqSendOrderlyMessage("tail_test_orderly_topic:test-group", "rocketmq,有序消息我来了");
     }
 
-    @GetMapping("/rocketmq/sendOrderlyMessage")
+    @GetMapping("/rocketmq/sendTransactionMessage")
     public String rocketMqSendTransactionMessage(){
         HashMap<String, String> message = new HashMap<>();
         message.put("status", "success");

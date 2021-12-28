@@ -28,8 +28,8 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
-    @Autowired
-    private ManualRocketmqConsummer rocketmqConsummer;
+//    @Autowired
+//    private ManualRocketmqConsummer rocketmqConsummer;
 
     /**
      * 功能描述:
@@ -102,7 +102,7 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
          * @param hashKey 顺序消费的关键，你选择queue保证消息有序的关键
          * @param sendCallback {@link SendCallback} 消息回调
          */
-        rocketmqConsummer.onOrderlyMessage();
+//        rocketmqConsummer.onOrderlyMessage();
         return "success";
     }
     /**
@@ -114,23 +114,13 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
      * @date: 2021/12/28 19:15
      */
     @Override
-    @Transactional(rollbackFor = RuntimeException.class)
     public String rocketMqSendTransactionMessage(String topic, Object message) {
-
         org.springframework.messaging.Message<Object> messageObj = MessageBuilder.withPayload(message).build();
         String transactionId = UUID.randomUUID().toString();
         TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction(topic, messageObj,transactionId);
-        System.out.println("半事务开启===" + transactionSendResult.getLocalTransactionState());
-        //执行业务如：退款= 售后服务发起退款变更为退款中，rpc调用账户退款接口，开启事务消息，
-        // 账户退款成功后提交完本地事务，通知退款修改状态退款成功，通知订单订单关闭
-        try {
-            //模拟本地业务提交
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        System.out.println("半事务开启 LocalTransactionState ===" + transactionSendResult.getLocalTransactionState());
+        System.out.println("半事务开启=== SendStatus" + transactionSendResult.getSendStatus());
+        return "succes";
     }
 
 

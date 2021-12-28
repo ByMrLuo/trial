@@ -29,16 +29,16 @@ public class DubboSPI {
 
         Robot optimusPrime = extensionLoader.getExtension("optimusPrime");
         optimusPrime.sayHello();
-
-        Robot bumblebee = extensionLoader.getExtension("bumblebee");
-        bumblebee.sayHello();
-
-        System.out.println("======================================");
-
-        //ExtensionLoader 源码中的核心几步
-        ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getAdaptiveExtension();
-        URL url = URL.valueOf("dubbo://127.0.0.1:5342/" + Robot.class.getName() + "?version=1.0.0");
-
+//
+//        Robot bumblebee = extensionLoader.getExtension("bumblebee");
+//        bumblebee.sayHello();
+//
+//        System.out.println("======================================");
+//
+//        //ExtensionLoader 源码中的核心几步
+//        Robot proxyFactory = ExtensionLoader.getExtensionLoader(Robot.class).getAdaptiveExtension();
+//        URL url = URL.valueOf("dubbo://127.0.0.1:5342/111?robot=optimusPrime");
+//        proxyFactory.sayHello(url);
     }
 
 }

@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
  * @Date: 2021/11/15 01:25
  */
 @Component
-//@RocketMQMessageListener(topic = "tail_orderly_topic", consumerGroup = "tail_orderly_topic_group",
-//                         messageModel = MessageModel.CLUSTERING,consumeMode = ConsumeMode.ORDERLY)
-@RocketMQMessageListener(topic = "tail_test_orderly_topic", consumerGroup = "test-group",
+@RocketMQMessageListener(topic = "tail_orderly_topic", consumerGroup = "tail_orderly_topic_group",
                          messageModel = MessageModel.CLUSTERING,consumeMode = ConsumeMode.ORDERLY)
+//@RocketMQMessageListener(topic = "tail_test_orderly_topic", consumerGroup = "test-group",
+//                         messageModel = MessageModel.CLUSTERING,consumeMode = ConsumeMode.ORDERLY)
 public class RocketMqOrderlyMessageConsumerEvent implements  RocketMQListener<MessageExt> {
 
     @Override
     public void onMessage(MessageExt message) {
-        System.out.println(Thread.currentThread().getName() + " onMessage: " + new String(message.getBody()));
+        System.out.println(Thread.currentThread().getName() + " onMessage: " + new String(message.getBody()) + "queueId: " + message.getQueueId());
     }
 }

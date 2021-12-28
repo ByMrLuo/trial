@@ -35,6 +35,7 @@ public class KafkaMessageEventImpl implements KafkaMessageEvent {
     @Override
     public String kafkaSendMessage(String topic, String message) {
         kafkaTemplate.send(topic, message);
+        kafkaTemplate.send(topic, 1, "order", message);
         return "success";
     }
 }
