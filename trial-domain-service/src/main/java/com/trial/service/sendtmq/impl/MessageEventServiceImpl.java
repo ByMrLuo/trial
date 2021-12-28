@@ -68,4 +68,17 @@ public class MessageEventServiceImpl implements MessageEventService {
         }
         return kafkaMessageEvent.kafkaSendMessage(topic,  messageJson);
     }
+
+    /**
+     * 功能描述:顺序有序消费
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/12/28 10:39
+     */
+    @Override
+    public String rocketMqSendOrderlyMessage(String topic, String message) {
+        return rocketMqMessageEvent.rocketMqSendOrderlyMessage(topic, message);
+    }
 }

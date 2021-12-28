@@ -23,7 +23,7 @@ public class RocketMqController {
 
     @GetMapping("/rocketmq/sendMessage")
     public String rocketMqSendMessage(){
-        return messageEventService.rocketMqSendMessage("tail_test_topic", "rocketmq,我来了");
+        return messageEventService.rocketMqSendMessage("tail_test_topic:test-group", "rocketmq,我来了");
     }
 
 
@@ -33,5 +33,10 @@ public class RocketMqController {
         return messageEventService.kafkaSendMessage("tail_test_topic", "kafka, 我来了");
     }
 
+    @GetMapping("/rocketmq/sendOrderlyMessage")
+    public String rocketMqSendOrderlyMessage(){
+        return messageEventService.rocketMqSendOrderlyMessage("tail_orderly_topic:tail_orderly_topic_group", "rocketmq,有序消息测试中");
+//        return messageEventService.rocketMqSendOrderlyMessage("tail_test_orderly_topic:test-group", "rocketmq,有序消息我来了");
+    }
 
 }

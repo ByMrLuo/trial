@@ -16,4 +16,26 @@ public interface RocketMqMessageEvent {
      * @date: 2021/11/15 18:08
      */
     public String rocketMqSendMessage(String topic, String message);
+
+
+    /**
+     * 功能描述: 顺序消费
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/11/15 18:08
+     */
+    public String rocketMqSendOrderlyMessage(String topic, String message);
+
+    /**
+     * 功能描述: 同步消费
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/11/15 18:08
+     */
+    public String rocketMqSendSyncMessage(String topic, String message);
+
 }

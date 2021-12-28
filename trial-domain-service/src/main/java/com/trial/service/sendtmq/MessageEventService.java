@@ -28,4 +28,13 @@ public interface MessageEventService {
      * @date: 2021/11/15 17:49
      */
     String kafkaSendMessage(String topic, String message);
+    /**
+     * 功能描述:顺序有序消费
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/12/28 10:38
+     */
+    String rocketMqSendOrderlyMessage(String topic, String message);
 }
