@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -80,5 +81,18 @@ public class MessageEventServiceImpl implements MessageEventService {
     @Override
     public String rocketMqSendOrderlyMessage(String topic, String message) {
         return rocketMqMessageEvent.rocketMqSendOrderlyMessage(topic, message);
+    }
+
+    /**
+     * 功能描述:顺序有序消费
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/12/28 10:39
+     */
+    @Override
+    public String rocketMqSendTransactionMessage(String topic, Map message) {
+        return rocketMqMessageEvent.rocketMqSendTransactionMessage(topic, message);
     }
 }

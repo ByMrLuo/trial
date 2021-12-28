@@ -56,4 +56,16 @@ public class ManualRocketmqConsummer {
         }
 
     }
+
+    /**
+     * 功能描述:事务消息
+     * @param
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2021/12/28 18:50
+     */
+    @PostConstruct
+    public void transactionMessage(){
+
+    }
 }

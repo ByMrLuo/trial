@@ -29,13 +29,13 @@ public interface RocketMqMessageEvent {
     public String rocketMqSendOrderlyMessage(String topic, String message);
 
     /**
-     * 功能描述: 同步消费
+     * 功能描述: 事务消息
      * @param topic
      * @param message
      * @return: java.lang.String
      * @auther: luoziwen
      * @date: 2021/11/15 18:08
      */
-    public String rocketMqSendSyncMessage(String topic, String message);
+    public String rocketMqSendTransactionMessage(String topic, Object message);
 
 }

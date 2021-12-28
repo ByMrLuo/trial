@@ -4,13 +4,17 @@ import com.trial.mq.rocketmq.RocketMqMessageEvent;
 import com.trial.mq.rocketmq.consumer.ManualRocketmqConsummer;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @方法说明:rocket
@@ -63,8 +67,7 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
     }
 
     /**
-     * 功能描述:
-     * 发送顺序消息
+     * 功能描述:发送顺序消息
      * @param topic
      * @param message
      * @return: java.lang.String
@@ -90,32 +93,45 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
             String msg= message + "type:"+ i % 4 +" value:"+i;
             rocketMQTemplate.syncSendOrderly(topic,msg, String.valueOf(i));
         }
-
-        //顺序消费通过hashKey来确定他们在哪个queue
-        //不使用上面的方式的话,默认rocketMQTemplate使用的是hash
-//        for(int i=0;i<100;i++){
-//            rocketMQTemplate.syncSendOrderly(topic, message+i, String.valueOf(i));
-//        }
-
-
-        /**
+        /** 顺序消费通过hashKey来确定他们在哪个queue
+         *  不使用上面的方式的话,默认rocketMQTemplate使用的是hash
          * Same to with send timeout specified in addition.
          * 支持超时时间设置。
          * @param destination formats: `topicName:tags` 就是topic
          * @param message {@link org.springframework.messaging.Message} 消息体
          * @param hashKey 顺序消费的关键，你选择queue保证消息有序的关键
          * @param sendCallback {@link SendCallback} 消息回调
-         * @param timeout send timeout with millis  超时时间
          */
-//        rocketMQTemplate.asyncSendOrderly(topic,);
-
         rocketmqConsummer.onOrderlyMessage();
         return "success";
     }
-
+    /**
+     * 功能描述:事务消息
+     * @param topic 实际上是topic:tag
+     * @param message 发送的消息体
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/12/28 19:15
+     */
     @Override
-    public String rocketMqSendSyncMessage(String topic, String message) {
+    @Transactional(rollbackFor = RuntimeException.class)
+    public String rocketMqSendTransactionMessage(String topic, Object message) {
+
+        org.springframework.messaging.Message<Object> messageObj = MessageBuilder.withPayload(message).build();
+        String transactionId = UUID.randomUUID().toString();
+        TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction(topic, messageObj,transactionId);
+        System.out.println("半事务开启===" + transactionSendResult.getLocalTransactionState());
+        //执行业务如：退款= 售后服务发起退款变更为退款中，rpc调用账户退款接口，开启事务消息，
+        // 账户退款成功后提交完本地事务，通知退款修改状态退款成功，通知订单订单关闭
+        try {
+            //模拟本地业务提交
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
+
+
 }

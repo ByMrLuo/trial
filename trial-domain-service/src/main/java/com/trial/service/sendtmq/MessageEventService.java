@@ -1,5 +1,7 @@
 package com.trial.service.sendtmq;
 
+import java.util.Map;
+
 /**
  * @方法说明:
  * @Description:
@@ -37,4 +39,14 @@ public interface MessageEventService {
      * @date: 2021/12/28 10:38
      */
     String rocketMqSendOrderlyMessage(String topic, String message);
+
+    /**
+     * 功能描述:事务消息
+     * @param topic
+     * @param message
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2021/12/28 10:38
+     */
+    String rocketMqSendTransactionMessage(String topic, Map message);
 }
