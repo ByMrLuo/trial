@@ -27,9 +27,16 @@ public class ManualRocketmqConsummer {
         consumer.setNamesrvAddr("121.199.164.16:9876");
 
         /**
-         * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
-         * 建议从头消费，妈的上次被坑过丢过很多消息
-         * 如果非第一次启动，那么按照上次消费的位置继续消费
+         * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费，如果非第一次启动，那么按照上次消费的位置继续消费。
+         * 消息积压之前使用过的两种方式：
+         * 1.rocketmq是以group为消费单位，上线一个新的group，然后增加对应的consumerqueue数量，
+         * setConsumeFromWhere设置为ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET
+         * 这个是保证新来的消息能够及时消费，不会产生旧的消息无法消费，新的消息也被堆积
+         *
+         * 2.停掉其他的消费的consumer，上线一个中转topic，该topic没有任何逻辑操作，只是将消息积压的topic中的消息重新转发
+         * 到新的topic，这样没有逻辑操作消费速度会更快，而新的topic新的consumer queue 的数量翻倍，消费者数量也翻倍，
+         * 然后去处理中转的这些积压消息
+         *
          */
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         try {
