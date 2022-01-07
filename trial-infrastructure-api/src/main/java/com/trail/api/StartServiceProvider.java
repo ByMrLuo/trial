@@ -9,7 +9,7 @@ import com.trail.api.rpc.impl.TestServiceImpl;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @description:
+ * @description:dubbo接口暴露流程
  * @date: 2021/11/12 10:39
  * @author: luoziwen
  */
