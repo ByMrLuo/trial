@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundGeoOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,9 +19,42 @@ public class RedisCatchFactoryImpl implements RedisCatchFactory {
 
     @Autowired
     RedisCatchRepository redisCatchRepository;
-
+    /**
+     * 功能描述:添加地图数据
+     * @param geoKey
+     * @param map
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/1/10 10:13
+     */
     @Override
     public void addBoundGeoOps(String geoKey, Map map) {
         redisCatchRepository.addBoundGeoOps(geoKey, map);
+    }
+
+    /**
+     * 功能描述:查询最新的公告
+     * @param limit
+     * @return: java.lang.String
+     * @auther: luoziwen
+     * @date: 2022/1/10 10:18
+     */
+    @Override
+    public List<String> queryLatestAnnouncement(String announcementKey, Integer limit) {
+        return redisCatchRepository.queryLatestAnnouncement(announcementKey, limit);
+    }
+
+
+    /**
+     * 功能描述:添加最新的公告
+     * @param announcementKey
+     * @param meaasge
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/1/10 10:19
+     */
+    @Override
+    public void addLatestAnnouncement(String announcementKey, String meaasge) {
+        redisCatchRepository.addLatestAnnouncement(announcementKey, meaasge);
     }
 }

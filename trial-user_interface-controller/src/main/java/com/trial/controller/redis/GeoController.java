@@ -1,6 +1,7 @@
 package com.trial.controller.redis;
 
 import com.alibaba.fastjson.JSONObject;
+import com.trial.factory.RedisCatchFactory;
 import com.trial.object.vo.HttpResponse;
 import com.trial.service.city.impl.CityCoordinatesServiceImpl;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class GeoController {
 
     @Autowired
     private CityCoordinatesServiceImpl cityCoordinatesService;
+
+    @Autowired
+    private RedisCatchFactory redisCatchFactory;
 
     /**
      * 功能描述:向数据库插入各省市坐标
@@ -103,4 +107,16 @@ public class GeoController {
 //        }
         return list;
     }
+
+    @GetMapping("/queryLatestAnnouncement")
+    public List<String>  queryLatestAnnouncement(){
+        return redisCatchFactory.queryLatestAnnouncement("announcement", 1);
+    }
+
+    @GetMapping("/addLatestAnnouncement")
+    public String  addLatestAnnouncement(String message){
+        redisCatchFactory.addLatestAnnouncement("announcement", message);
+        return "success";
+    }
+
 }
