@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
  * @date: 2021/11/12 10:39
  * @author: luoziwen
  */
-public class Test {
+public class StartServiceProvider {
 
     private static String zookeeperHost = System.getProperty("zookeeper.address", "121.199.164.16");
 
