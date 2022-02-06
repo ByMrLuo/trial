@@ -1,15 +1,16 @@
 package com.trial.mq.rocketmq.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
-import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
+import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -25,8 +26,9 @@ public class ManualRocketmqConsummer {
     public void onOrderlyMessage(){
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tail_orderly_topic_group");
         consumer.setNamesrvAddr("121.199.164.16:9876");
-
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        //消费端控制 消费模式集群or广播
+        consumer.setMessageModel(MessageModel.BROADCASTING);
         try {
             consumer.subscribe("tail_orderly_topic","*");
             //顺序消费
@@ -44,6 +46,13 @@ public class ManualRocketmqConsummer {
                     e.printStackTrace();
                 }
                 return ConsumeOrderlyStatus.SUCCESS;
+            });
+            //并发消费
+            consumer.registerMessageListener(new MessageListenerConcurrently() {
+                @Override
+                public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                    return null;
+                }
             });
             consumer.start();
         } catch (MQClientException e) {
