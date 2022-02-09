@@ -15,7 +15,7 @@ import com.trial.service.dubbo.Robot;
 public class DubboSPI {
     /**
      * @description:
-     * 说实话开始我是不理解为什么dubbo要自定义spi的，因为感觉就像rokcetmq一样，不复用jms的定语
+     * 说实话开始我是不理解为什么dubbo要自定义spi的，
      * 后来发现一个问题，java 的spi 有一个猫饼，就是启动的时候会加载所有的MATE-INF下的远程接口，
      * 这项目要是启动一下就要了老命了，而且你无法保证你加载的这些会全部用到，总的来说dubbo实现的
      * 这种更能体现物尽其用，不做无用功的效果。
