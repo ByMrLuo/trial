@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @description: redis连接配置
+ * @description: redis连接配置(防止乱码)
  * @date: 2020/7/15 11:24
  * @author: luoziwen
  */

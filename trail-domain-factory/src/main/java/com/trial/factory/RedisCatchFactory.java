@@ -1,8 +1,11 @@
 package com.trial.factory;
 
 
+import org.springframework.data.redis.core.ZSetOperations;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @description:
@@ -37,4 +40,13 @@ public interface RedisCatchFactory {
      * @date: 2022/1/10 14:18
      */
     void addLatestAnnouncement(String announcementKey, String meaasge);
+    /**
+     * 功能描述:添加城市排行
+     * @param scoreRank
+     * @param tuples
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/4/6 11:24
+     */
+    void addRankingList(String scoreRank, Set<ZSetOperations.TypedTuple<String>> tuples);
 }

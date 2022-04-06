@@ -12,12 +12,11 @@ import com.trial.service.citycoordinates.CityCoordinatesOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.core.BoundGeoOperations;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @方法说明:城市坐标操作领域
@@ -35,6 +34,9 @@ public class CityCoordinatesOperationServiceimpl implements CityCoordinatesOpera
     private RedisCatchFactory redisCatchFactory;
 
     private static final String GEO_KEY = "cityCoordinates";
+
+
+    public static final String SCORE_RANK = "score_rank";
 
     @Override
     public HttpResponse<List> insertCityCoordinates() {
@@ -55,11 +57,26 @@ public class CityCoordinatesOperationServiceimpl implements CityCoordinatesOpera
         cityCoordinatesOperationFactory.inserCityCoordinates(cityCoordinatesList);
         //放入缓存
         HashMap<String, Point> map = new HashMap<>();
+
+        //城市排行缓存
+        Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
+        long start = System.currentTimeMillis();
+        Random random = new Random();
+
         cityCoordinatesList.forEach(cityCoordinaty -> {
             Point point = new Point(cityCoordinaty.getLongitude(), cityCoordinaty.getLatitude());
             map.put(cityCoordinaty.getCityName(), point);
+            //随机取值
+            int i = random.nextInt(100);
+            DefaultTypedTuple<String> tuple = new DefaultTypedTuple<>(cityCoordinaty.getCityName(), 1D + i);
+            tuples.add(tuple);
         });
+        //添加城市坐标的二级缓存
         redisCatchFactory.addBoundGeoOps(GEO_KEY, map);
+        //添加城市排行榜
+        redisCatchFactory.addRankingList(SCORE_RANK, tuples);
+        //计算时间
+        System.out.println("循环时间:" +( System.currentTimeMillis() - start));
         return result;
     }
 }

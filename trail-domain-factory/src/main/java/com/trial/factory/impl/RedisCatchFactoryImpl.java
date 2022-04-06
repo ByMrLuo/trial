@@ -4,10 +4,12 @@ import com.trial.factory.RedisCatchFactory;
 import com.trial.repository.RedisCatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundGeoOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @description:
@@ -56,5 +58,18 @@ public class RedisCatchFactoryImpl implements RedisCatchFactory {
     @Override
     public void addLatestAnnouncement(String announcementKey, String meaasge) {
         redisCatchRepository.addLatestAnnouncement(announcementKey, meaasge);
+    }
+
+    /**
+     * 功能描述:添加排序所需数据
+     * @param scoreRank
+     * @param tuples
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/4/6 14:23
+     */
+    @Override
+    public void addRankingList(String scoreRank, Set<ZSetOperations.TypedTuple<String>> tuples) {
+        redisCatchRepository.addRankingList(scoreRank, tuples);
     }
 }

@@ -1,11 +1,11 @@
 package com.trial.algorithm;
 
 /**
- * @description:
+ * @description: Abc依次打印
  * @date: 2022/2/24 16:45
  * @author: luoziwen
  */
-public class Dmemo {
+public class Demo {
 
     private static volatile  int COUNT = 30;
 

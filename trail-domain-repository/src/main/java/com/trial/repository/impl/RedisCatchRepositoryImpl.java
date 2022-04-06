@@ -3,11 +3,15 @@ package com.trial.repository.impl;
 import com.trial.repository.RedisCatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundGeoOperations;
+import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @description:
@@ -32,6 +36,7 @@ public class RedisCatchRepositoryImpl implements RedisCatchRepository {
     public void addBoundGeoOps(String geoKey, Map map) {
         BoundGeoOperations boundGeoOperations = redisTemplate.boundGeoOps(geoKey);
         boundGeoOperations.add(map);
+        //添加热门城市排行
     }
 
     /**
@@ -61,4 +66,20 @@ public class RedisCatchRepositoryImpl implements RedisCatchRepository {
     public void addLatestAnnouncement(String announcementKey, String meaasge) {
         redisTemplate.opsForList().leftPush(announcementKey, meaasge);
     }
+
+
+    /**
+     * 功能描述:排行榜
+     * @param scoreRank
+     * @param tuples
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/1/10 10:19
+     */
+    @Override
+    public void addRankingList (String scoreRank, Set<ZSetOperations.TypedTuple<String>> tuples) {
+        redisTemplate.opsForZSet().add(scoreRank, tuples);
+    }
+
+
 }
