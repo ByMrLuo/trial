@@ -16,6 +16,14 @@ public interface CityCoordinatesService {
      * @date: 2020/7/27 16:50
      */
     HttpResponse insertCityCoordinates();
+    /**
+     * 功能描述:热门搜索城市+1
+     * @param cityName
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/4/7 11:29
+     */
+    void addHotCity(String cityName);
 
 //    /**
 //     * 功能描述:添加各省市坐标

@@ -114,8 +114,14 @@ public class GeoController {
     }
 
     @GetMapping("/addLatestAnnouncement")
-    public String  addLatestAnnouncement(String message){
+    public String addLatestAnnouncement(String message){
         redisCatchFactory.addLatestAnnouncement("announcement", message);
+        return "success";
+    }
+
+    @GetMapping("/addHotCity")
+    public String addHotCity(String cityName){
+        cityCoordinatesService.addHotCity(cityName);
         return "success";
     }
 

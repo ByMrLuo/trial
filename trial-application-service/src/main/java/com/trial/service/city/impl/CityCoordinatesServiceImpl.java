@@ -37,7 +37,12 @@ public class CityCoordinatesServiceImpl implements CityCoordinatesService {
         return listHttpResponse;
     }
 
-//    @Override
+    @Override
+    public void addHotCity(String cityName) {
+        cityCoordinatesOperationServiceImpl.addHotCity(cityName);
+    }
+
+    //    @Override
 //    public void inserCityCoordinates(List<CityCoordinates> geos) {
 //        cityCoordinatesMapper.inserCityCoordinates(geos);
 //    }

@@ -20,4 +20,12 @@ public interface CityCoordinatesOperationService {
      * @date 2021/11/22 1:09
      */
     HttpResponse<List> insertCityCoordinates();
+    /**
+     * 功能描述:
+     * @param cityName
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/4/7 11:30
+     */
+    void addHotCity(String cityName);
 }

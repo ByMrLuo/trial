@@ -79,4 +79,9 @@ public class CityCoordinatesOperationServiceimpl implements CityCoordinatesOpera
         System.out.println("循环时间:" +( System.currentTimeMillis() - start));
         return result;
     }
+
+    @Override
+    public void addHotCity(String cityName) {
+        redisCatchFactory.addHotCity(SCORE_RANK, cityName);
+    }
 }

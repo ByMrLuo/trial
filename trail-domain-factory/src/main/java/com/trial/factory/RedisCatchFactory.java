@@ -49,4 +49,12 @@ public interface RedisCatchFactory {
      * @date: 2022/4/6 11:24
      */
     void addRankingList(String scoreRank, Set<ZSetOperations.TypedTuple<String>> tuples);
+    /**
+     * 功能描述:对搜索城市进行+1操作
+     * @param cityName
+     * @return: void
+     * @auther: luoziwen
+     * @date: 2022/4/7 11:23
+     */
+    void addHotCity(String key, String cityName);
 }

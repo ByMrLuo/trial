@@ -81,5 +81,8 @@ public class RedisCatchRepositoryImpl implements RedisCatchRepository {
         redisTemplate.opsForZSet().add(scoreRank, tuples);
     }
 
-
+    @Override
+    public void addHotCity(String key, String cityName) {
+        redisTemplate.opsForZSet().incrementScore(key, cityName, 1);
+    }
 }

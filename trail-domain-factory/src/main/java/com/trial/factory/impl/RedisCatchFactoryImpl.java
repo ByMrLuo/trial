@@ -72,4 +72,9 @@ public class RedisCatchFactoryImpl implements RedisCatchFactory {
     public void addRankingList(String scoreRank, Set<ZSetOperations.TypedTuple<String>> tuples) {
         redisCatchRepository.addRankingList(scoreRank, tuples);
     }
+
+    @Override
+    public void addHotCity(String key, String cityName) {
+        redisCatchRepository.addHotCity(key, cityName);
+    }
 }
