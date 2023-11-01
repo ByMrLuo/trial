@@ -67,7 +67,7 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
     }
 
     /**
-     * 功能描述:发送顺序消息
+     * 功能描述:发送顺序消息(部分有序保证相同id的消息发送到一个队列中)
      * @param topic
      * @param message
      * @return: java.lang.String
@@ -75,7 +75,7 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
      * @date: 2021/11/15 17:50
      */
     @Override
-    public String rocketMqSendOrderlyMessage(String topic, String message) {
+    public String rocketMqSendOrderlyMessage(String topic, String message,Long id) {
         //返回选中的队列 可以直接用已经提供好的实现类
         rocketMQTemplate.setMessageQueueSelector((List<MessageQueue> mqs, Message msg, Object arg) ->{
             /**
@@ -89,10 +89,7 @@ public class RocketMqMessageEventImpl implements RocketMqMessageEvent {
 
         });
 
-        for(int i=1;i<=10;i++){
-            String msg= message + "type:"+ i % 4 +" value:"+i;
-            rocketMQTemplate.syncSendOrderly(topic,msg, String.valueOf(i));
-        }
+        rocketMQTemplate.syncSendOrderly(topic, message, id.toString());
         /** 顺序消费通过hashKey来确定他们在哪个queue
          *  不使用上面的方式的话,默认rocketMQTemplate使用的是hash
          * Same to with send timeout specified in addition.

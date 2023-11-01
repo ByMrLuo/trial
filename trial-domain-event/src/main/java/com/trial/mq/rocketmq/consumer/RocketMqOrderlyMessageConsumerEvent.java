@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
  * @Date: 2021/11/15 01:25
  */
 @Component
-@RocketMQMessageListener(topic = "tail_orderly_topic", consumerGroup = "tail_orderly_topic_group",
-                         messageModel = MessageModel.CLUSTERING,consumeMode = ConsumeMode.ORDERLY)
-//@RocketMQMessageListener(topic = "tail_test_orderly_topic", consumerGroup = "test-group",
+//@RocketMQMessageListener(topic = "tail_orderly_topic", consumerGroup = "tail_orderly_topic_group",
 //                         messageModel = MessageModel.CLUSTERING,consumeMode = ConsumeMode.ORDERLY)
+@RocketMQMessageListener(topic = "tail_orderly_topic_test", consumerGroup = "orderly-test-group"
+                        ,consumeMode = ConsumeMode.ORDERLY)
 public class RocketMqOrderlyMessageConsumerEvent implements  RocketMQListener<MessageExt> {
 
     @Override

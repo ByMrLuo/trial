@@ -79,8 +79,8 @@ public class MessageEventServiceImpl implements MessageEventService {
      * @date: 2021/12/28 10:39
      */
     @Override
-    public String rocketMqSendOrderlyMessage(String topic, String message) {
-        return rocketMqMessageEvent.rocketMqSendOrderlyMessage(topic, message);
+    public String rocketMqSendOrderlyMessage(String topic, String message, Long id) {
+        return rocketMqMessageEvent.rocketMqSendOrderlyMessage(topic, message ,id);
     }
 
     /**

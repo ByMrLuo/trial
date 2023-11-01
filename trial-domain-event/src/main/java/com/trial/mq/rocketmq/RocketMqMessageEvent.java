@@ -26,7 +26,7 @@ public interface RocketMqMessageEvent {
      * @auther: luoziwen
      * @date: 2021/11/15 18:08
      */
-    public String rocketMqSendOrderlyMessage(String topic, String message);
+    public String rocketMqSendOrderlyMessage(String topic, String message, Long id);
 
     /**
      * 功能描述: 事务消息
