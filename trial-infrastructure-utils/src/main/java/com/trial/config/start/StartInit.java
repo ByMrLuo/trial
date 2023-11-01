@@ -1,4 +1,4 @@
-package com.trial.service.start;
+package com.trial.config.start;
 
 import org.springframework.boot.CommandLineRunner;
 

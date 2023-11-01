@@ -1,7 +1,6 @@
 package com.trial.controller.index;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.trial.service.start.I18nUtil;
+import com.trial.config.start.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
