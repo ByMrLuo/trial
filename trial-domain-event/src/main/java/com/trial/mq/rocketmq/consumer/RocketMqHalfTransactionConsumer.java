@@ -11,14 +11,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
- * @description: 事务半消息
+ * @description: 生产者在发送完半消息后，如果成功则会进入到这个类中进行本地事务提交
+ * 如果提交成功，则事务消息会被消费者正式接收到，如果失败则需要回滚，半消息也就不会再发送给消费者
  * @date: 2021/12/28 19:43
+ * @date: 2024/3/14 19:43
  * @author: luoziwen
  */
 @Component
 @RocketMQTransactionListener
 public class RocketMqHalfTransactionConsumer implements RocketMQLocalTransactionListener {
-
+    /**
+     * @description 在正确发送事务半消息后会进入到这里执行生产者的本地事务提交
+     * @author Mr.Luo
+     * @date 2024/03/14 18:23
+     */
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         //执行业务如：退款= 售后服务发起退款变更为退款中，rpc调用账户退款接口，开启事务消息，
@@ -40,7 +46,12 @@ public class RocketMqHalfTransactionConsumer implements RocketMQLocalTransaction
         result = RocketMQLocalTransactionState.UNKNOWN;
         return result;
     }
-
+    /**
+     * @description 当本地事务一直没有相应的时候会被调用该方法检查该对应的本地事务是否已经成功
+     * 成功则将消息转化为正式的消息，否则回滚
+     * @author Mr.Luo
+     * @date 2024/03/14 18:23
+     */
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
         // 检查本地事务
