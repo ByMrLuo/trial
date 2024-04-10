@@ -108,18 +108,19 @@ public class ReverseWebSocketEndpoint {
     private void request(String message, Session session)throws Exception{
         //创建响应体和请求体对象
         //switch逻辑
+        String result = null;
         switch ("岗亭请求咱们类型"){
             case "业务操作":
                 try {
                     String host = (String)session.getUserProperties().get("host");
                     //构建请求必须得类型参数
-                    webSocketRequestMappingResolver.excute();
+                    result = webSocketRequestMappingResolver.excute();
                 }catch (Exception e){
 
                 }
                 break;
         }
-        sendMessage(session, "result");
+        sendMessage(session, result);
     }
 
     private void response(String message, Session session){

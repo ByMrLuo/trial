@@ -1,7 +1,7 @@
-package com.trail.api.rpc.impl;
+package com.trial.api.rpc.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.trail.api.rpc.TestService;
+import com.trial.api.rpc.TestService;
 
 /**
  * @description:
@@ -9,7 +9,7 @@ import com.trail.api.rpc.TestService;
  * @author: luoziwen
  */
 
-
+@Service(version = "1.0",registry = "2")
 public class TestServiceImpl implements TestService {
 
 

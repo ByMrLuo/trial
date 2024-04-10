@@ -1,10 +1,10 @@
-package com.trail.api;
+package com.trial.api;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.ServiceConfig;
-import com.trail.api.rpc.TestService;
-import com.trail.api.rpc.impl.TestServiceImpl;
+import com.trial.api.rpc.TestService;
+import com.trial.api.rpc.impl.TestServiceImpl;
 
 import java.util.concurrent.CountDownLatch;
 

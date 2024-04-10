@@ -39,7 +39,7 @@ public class WebSocketFuture {
      * @author Mr.Luo
      * @date 2023/11/08 01:48
      */
-    public Boolean request(Session sesion, String mes) throws Exception{
+    public static Boolean request(Session sesion, String mes) throws Exception{
         if(sesion.isOpen()){
             sesion.getBasicRemote().sendText(mes);
             return true;
@@ -71,7 +71,7 @@ public class WebSocketFuture {
         }
     }
     //同步阻塞
-    private Object get(int timeout){
+    public Object get(int timeout){
         long start = System.currentTimeMillis();
         if(data != null){
             lock.lock();

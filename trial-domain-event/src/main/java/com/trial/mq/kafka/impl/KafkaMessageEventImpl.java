@@ -20,22 +20,22 @@ import java.util.UUID;
 public class KafkaMessageEventImpl implements KafkaMessageEvent {
 
 
-    @Autowired
-    private KafkaTemplate<String ,Object> kafkaTemplate;
-
-
-    /**
-     * 功能描述:
-     * @param topic
-     * @param message
-     * @return: java.lang.String
-     * @auther: luoziwen
-     * @date: 2021/11/15 17:50
-     */
+//    @Autowired
+//    private KafkaTemplate<String ,Object> kafkaTemplate;
+//
+//
+//    /**
+//     * 功能描述:
+//     * @param topic
+//     * @param message
+//     * @return: java.lang.String
+//     * @auther: luoziwen
+//     * @date: 2021/11/15 17:50
+//     */
     @Override
     public String kafkaSendMessage(String topic, String message) {
-        kafkaTemplate.send(topic, message);
-        kafkaTemplate.send(topic, 1, "order", message);
+//        kafkaTemplate.send(topic, message);
+//        kafkaTemplate.send(topic, 1, "order", message);
         return "success";
     }
 }

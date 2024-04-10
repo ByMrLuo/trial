@@ -7,7 +7,7 @@ import java.util.concurrent.CyclicBarrier;
  * @author: Mr.Luo
  * @create: 2023-11-14 16:50
  **/
-public class JUCDemo {
+public class CyclicBarrierDemo {
 
     public static void main(String[] args) throws Exception{
         /**CyclicBarrier使用实例，多个线程等待发号枪后开始*/

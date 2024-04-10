@@ -1,4 +1,4 @@
-package com.trail.api.rpc;
+package com.trial.api.rpc;
 
 /**
  * @description:

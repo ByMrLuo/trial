@@ -56,7 +56,7 @@ public class WebSocketRequestMappingResolver {
     }
 
 
-    public void excute(/**请求入参*/) throws Exception{
+    public String excute(/**请求入参*/) throws Exception{
         if(true){
             init();
         }
@@ -69,9 +69,10 @@ public class WebSocketRequestMappingResolver {
         //发mq
         handleMqRequest();
 
-        //填充上下文变量
+        //填充上下文变量调用对应方法获取result
 
         //判定类型并return
+        return null;
     }
 
     private void handleMqRequest(){

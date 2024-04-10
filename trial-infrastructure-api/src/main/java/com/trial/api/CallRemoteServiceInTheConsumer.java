@@ -1,9 +1,9 @@
-package com.trail.api;
+package com.trial.api;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.trail.api.rpc.TestService;
+import com.trial.api.rpc.TestService;
 
 /**
  * @description:在使用者中调用远程服务

@@ -14,7 +14,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(scanBasePackages={"com.trial.*"})
 @MapperScan("com.trial.mapper")
 //开启zk客户端
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
+//开启openfegin
+@EnableFeignClients(basePackages = {"com.trial.*"})
 public class TrialApplication {
 
     public static void main(String[] args) {

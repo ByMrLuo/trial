@@ -1,9 +1,9 @@
 package com.trial.mq.rocketmq.consumer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
