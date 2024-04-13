@@ -19,4 +19,20 @@ public class SpringCloudRPCServiceImpl implements SpringCloudRPCService {
     public String rpcTest1(){
         return springCloudServiceClient.test1("666666");
     }
+
+
+    @Override
+    public String rpcTest2() {
+        return springCloudServiceClient.test2();
+    }
+
+    @Override
+    public String rpcTest3() {
+        return springCloudServiceClient.test3();
+    }
+
+    @Override
+    public String rpcTest4() {
+        return springCloudServiceClient.test4();
+    }
 }

@@ -8,4 +8,10 @@ package com.trial.service.rpc;
 public interface SpringCloudRPCService {
 
     public String rpcTest1();
+
+    String rpcTest2();
+
+    String rpcTest3();
+
+    String rpcTest4();
 }

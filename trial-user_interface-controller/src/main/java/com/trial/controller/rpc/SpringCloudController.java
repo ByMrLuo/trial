@@ -17,9 +17,43 @@ public class SpringCloudController {
 
     @Autowired
     private SpringCloudRPCService springCloudEventService;
-
+    /**
+     * @description 连接测试
+     * @author Mr.Luo
+     * @date 2024/04/12 16:03
+     */
     @GetMapping("/hystrixtest1")
     public String hystrixtest1(){
         return springCloudEventService.rpcTest1();
+    }
+
+    /**
+     * @description 远程调用超时
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/hystrixtest2")
+    public String hystrixtest2(){
+        return springCloudEventService.rpcTest2();
+    }
+
+    /**
+     * @description 远程调用失败
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/hystrixtest3")
+    public String hystrixtest3(){
+        return springCloudEventService.rpcTest3();
+    }
+
+    /**
+     * @description 远程调用失败
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/hystrixtest4")
+    public String hystrixtest4(){
+        return springCloudEventService.rpcTest4();
     }
 }
