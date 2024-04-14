@@ -1,6 +1,5 @@
 package com.trial.fegin;
 
-import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @create: 2024-04-12 17:10
  **/
 @Component
-public class SpringCloudFallbackConfiguration implements SpringCloudServiceClient {
+public class SpringCloudFallbackHystrixConfiguration implements SpringCloudServiceHystrixClient {
 
         @Override
         public String test1(String message) {
@@ -31,8 +30,8 @@ public class SpringCloudFallbackConfiguration implements SpringCloudServiceClien
             return "触发fallback了";
         }
 
-    @Override
-    public String test4() {
-        return "test4触发fallback了";
-    }
+        @Override
+        public String test4() {
+            return "test4触发fallback了";
+        }
 }

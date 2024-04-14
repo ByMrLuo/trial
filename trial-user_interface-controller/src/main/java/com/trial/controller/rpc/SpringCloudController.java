@@ -56,4 +56,36 @@ public class SpringCloudController {
     public String hystrixtest4(){
         return springCloudEventService.rpcTest4();
     }
+
+
+    /**
+     * @description 远程调用成功
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/resilience4jtest1")
+    public String resilience4jtest1(){
+        return springCloudEventService.rpcTest5();
+    }
+
+
+    /**
+     * @description 远程调用成功
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/resilience4jtest2")
+    public String resilience4jtest2(){
+        return springCloudEventService.rpcTest6();
+    }
+
+    /**
+     * @description 远程调用失败
+     * @author Mr.Luo
+     * @date 2024/04/12 16:02
+     */
+    @GetMapping("/resilience4jtest3")
+    public String resilience4jtest3(){
+        return springCloudEventService.rpcTest7();
+    }
 }

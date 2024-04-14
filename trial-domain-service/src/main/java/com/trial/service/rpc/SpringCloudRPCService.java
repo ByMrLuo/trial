@@ -14,4 +14,10 @@ public interface SpringCloudRPCService {
     String rpcTest3();
 
     String rpcTest4();
+
+    String rpcTest5();
+
+    String rpcTest6();
+
+    String rpcTest7();
 }

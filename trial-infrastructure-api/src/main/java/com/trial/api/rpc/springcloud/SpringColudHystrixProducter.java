@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
  * @create: 2024-04-09 18:51
  **/
 @RestController
-@RequestMapping("/springcloud")
-public class SpringColudProducer{
+@RequestMapping("/springcloudhystrix")
+public class SpringColudHystrixProducter {
 
 
 

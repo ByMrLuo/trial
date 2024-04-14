@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author: Mr.Luo
  * @create: 2024-04-13 02:15
  **/
-//@Configuration
+@Configuration
 public class FooConfiguration {
     @Bean
     Logger.Level feignLoggerLevel() {

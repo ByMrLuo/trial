@@ -119,6 +119,11 @@
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
+        <!--Resilience4j 可替代hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
         <!--zk和consul不能共存否则会报错-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->

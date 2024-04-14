@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
  **/
 //如果使用springcloud-loadblance请开始下面这行注释配置
 //@FeignClient(name = "trial" ,configuration = LoadBalancerFeignClientConfiguration.class)
-@FeignClient(name = "trial" ,fallback = SpringCloudFallbackConfiguration.class,
-        path = "/springcloud",url = "http://localhost:8080",configuration = FooConfiguration.class)
-public interface SpringCloudServiceClient {
+@FeignClient(contextId = "hystrix",name = "trial" ,fallback = SpringCloudFallbackHystrixConfiguration.class,
+        path = "/springcloudhystrix",url = "http://localhost:8080",configuration = FooConfiguration.class)
+public interface SpringCloudServiceHystrixClient {
 
 
     @GetMapping("/test1/{message}")
