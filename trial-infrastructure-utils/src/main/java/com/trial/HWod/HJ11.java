@@ -1,7 +1,5 @@
 package com.trial.HWod;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +9,7 @@ import java.util.regex.Pattern;
  * @author: Mr.Luo
  * @create: 2024-05-25 17:25
  **/
-public class HW11 {
+public class HJ11 {
     /**
      * 题目描述
      * 提取字符串中的最长合法简单数学表达式，字符串长度最长的，并计算表达式的值。如果没有，则返回 0 。
