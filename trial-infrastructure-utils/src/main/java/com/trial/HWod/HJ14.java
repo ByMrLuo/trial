@@ -43,144 +43,134 @@ public class HJ14 {
      * */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        //产品数量
         int number = scanner.nextInt();
-        //拥有资金
         int money = scanner.nextInt();
-        //总风险
         int allRisk = scanner.nextInt();
-        scanner.nextLine();
-        //产品回报率集合
         int[] returns = new int[number];
-        for(int i = 0; i < number; i++){
-            returns[i] = scanner.nextInt();
+        //回报率
+        for(int i = 0; i < number ;i++){
+            returns[i] = Integer.valueOf(scanner.nextInt());
         }
-        //各个产品的风险
+        //风险
         int[] risks = new int[number];
-        for(int i = 0; i < number; i++){
-            risks[i] = scanner.nextInt();
+        for(int i = 0; i < number ;i++){
+            risks[i] = Integer.valueOf(scanner.nextInt());
         }
-        //各个最大投资额度
-        int[] maxInvestments  = new int[number];
-        for(int i = 0; i < number; i++){
-            maxInvestments[i] = scanner.nextInt();
+        //最大购买量
+        int[] maxInvestments = new int[number];
+        for(int i = 0; i < number ;i++){
+            maxInvestments[i] = Integer.valueOf(scanner.nextInt());
         }
-        //最大回报
-        int maxReturnMoney = 0;
-        //对应的风险
-        int selectedRisk = 0;
-        //最佳投资方案
-        int[] bestInvestmentPlan = new int[number];
+        //处理单个产品购买的情况
+        //定义指针
         int left = 0;
-        int right = 0;
-        //单个产品投资最大，和组合最大两部分
+        //最大回报
+        int maxReturn = 0;
+        //存放最佳产品组合
+        int[] bestInvestments = new int[number];
+        int selectedRisk = Integer.MAX_VALUE;
         while(left < number){
-            //当前产品的风险
+            if(risks[left] > allRisk){
+                left++;
+                continue;
+            }
+            //当前产品的信息
             int thisRisk = risks[left];
-            //最大投资金额
-            int thismaxInvestment = maxInvestments[left];
-            //回报率
+            int thisMaxInvestment = maxInvestments[left];
             int thisReturn = returns[left];
-            //风险超出直接下一个
-            if(thisRisk > allRisk){
+            int thisMaxReturn = 0;
+            //判定是否当前的投资金额大于拥有的资金，
+            // 如果大于那么你只能投资你拥有的金额
+            if(thisMaxInvestment > money){
+                thisMaxInvestment =  money;
+            }
+            thisMaxReturn = thisMaxInvestment * thisReturn;
+            //判定最大回报是否大于当前回报，大于则进行下一次
+            if(maxReturn > thisMaxReturn){
                 left++;
                 continue;
-            }
-            //如果最大投资金额超过当前拥有的金额那么你最大只能投资你拥有的金额
-            if(thismaxInvestment >= money){
-                thismaxInvestment = money;
-            }
-
-            int thisMaxReturn = thismaxInvestment * thisReturn;
-            //当回报相等，风险之前的和现在的小于等于，不变更
-            if((thisMaxReturn == maxReturnMoney && selectedRisk <= thisRisk) || thisMaxReturn < maxReturnMoney){
-                left++;
-                continue;
-            }
-            bestInvestmentPlan = new int[number];
-            //大于则重置最大值
-            selectedRisk = thisRisk;
-            maxReturnMoney = thisMaxReturn;
-            bestInvestmentPlan[left] = thismaxInvestment;
-            left++;
-        }
-        //两个组合的最优选择
-        left = 0;
-        right = 1;
-        while(left < number ){
-            //判定快指针的边界
-            if(right >= number){
-                left++;
-                right = left+1;
-                continue;
-            }
-            //left当前产品的风险
-            int leftRisk = risks[left];
-            //left最大投资金额
-            int leftmaxInvestment = maxInvestments[left];
-            //left回报率
-            int leftReturn = returns[left];
-
-            //right当前产品的风险
-            int rightRisk = risks[right];
-            //right最大投资金额
-            int rightmaxInvestment = maxInvestments[right];
-            //right回报率
-            int rightReturn = returns[right];
-            //超出的组合直接略过
-            if(leftRisk + rightRisk > allRisk){
-                right++;
-                continue;
-            }
-            //当前产品的风险
-            int thisRisk = leftRisk + rightRisk;
-
-            //上面已经处理了钱不管是否剩余都只买一种产品的情况，现在要考虑肯定可以买两种产品的情况
-            if(money - leftmaxInvestment <= 0 && money - rightmaxInvestment <= 0 ){
-                right++;
-                continue;
-            }
-            //最大投资金额
-            int thismaxInvestment = leftmaxInvestment + rightmaxInvestment;
-            //只考虑大于资金
-            if(thismaxInvestment > money){
-                //回报率高的优先拉满
-                if(leftReturn > rightReturn){
-                    //剩余的给回报小的，如果是负数则为0
-                    rightmaxInvestment = Math.max(money - leftmaxInvestment, 0);
-                    //回报高的也要确定最多购买量是否超过money，如果超过只能买money
-                    leftmaxInvestment = Math.min(leftmaxInvestment, money);
-                }else if(leftReturn < rightReturn){
-                    leftmaxInvestment = Math.max(money - rightmaxInvestment, 0);
-                    rightmaxInvestment = Math.min(rightmaxInvestment, money);
-                }else if(leftRisk < rightRisk){
-                    //回报相等，优先买风险小的
-                    rightmaxInvestment = Math.max(money - leftmaxInvestment, 0);
-                    //风险小的的也要确定最多购买量是否超过money，如果超过只能买money
-                    leftmaxInvestment = Math.min(leftmaxInvestment, money);
-                }else{
-                    leftmaxInvestment = Math.max(money - rightmaxInvestment, 0);
-                    rightmaxInvestment = Math.min(rightmaxInvestment, money);
+            }else if(maxReturn == thisMaxReturn){
+                //回报等于，则选择风险小的
+                if(selectedRisk <= thisRisk){
+                    left++;
+                    continue;
                 }
             }
-            //最大回报金额
-            int thisMaxReturn = rightmaxInvestment * rightReturn + leftmaxInvestment * leftReturn;
-            //当回报相等，风险之前的和现在的小于等于，或者当前回报小于最大回报直接开始下一组统计
-            if((thisMaxReturn == maxReturnMoney && selectedRisk <= thisRisk) || thisMaxReturn < maxReturnMoney){
+            //更新各个最大值，以及数组的集合
+            maxReturn = thisMaxReturn;
+            selectedRisk = thisRisk;
+            //每次更新都要初始化，否则会遗留上一次的更新信息
+            bestInvestments = new int[number];
+            bestInvestments[left] = thisMaxInvestment;
+            left++;
+        }
+        //初始化left，定义第二个变量right；
+        left = 0;
+        int right = 1;
+        //两个组合最大
+        while(left < number){
+            //判定边界条件
+            if(right >= number){
+                left++;
+                right = left + 1;
+                continue;
+            }
+            //第一款产品信息
+            int leftRisk = risks[left];
+            int leftMaxInvestment = maxInvestments[left];
+            int leftReturn = returns[left];
+            int leftMaxReturn = 0;
+            //第二款产品信息
+            int rightRisk = risks[right];
+            int rightMaxInvestment = maxInvestments[right];
+            int rightReturn = returns[right];
+            int rightMaxReturn = 0;
+            //两种产品总风险
+            int thisAllRisk = leftRisk + rightRisk;
+            int thisAllMaxReturn = 0;
+            //第一款产品大于或者等于说明当前产品不适合组合销售，直接left++
+            if(leftRisk >= allRisk){
+                left++;
+                right = left + 1;
+                continue;
+            }else if(rightRisk >= allRisk || thisAllRisk > allRisk){
+                //第二款产品大于或者等于说明当前产品不适合组合销售，
+                // 或者两个的组合大于总风险，又因为leftRisk经过上面的条件，肯定是小雨的，那么就需要直接right++
                 right++;
                 continue;
             }
-            //大于则重置最大值
-            selectedRisk = thisRisk;
-            maxReturnMoney = thisMaxReturn;
-            bestInvestmentPlan = new int[number];
-            bestInvestmentPlan[left] = leftmaxInvestment;
-            bestInvestmentPlan[right] = rightmaxInvestment;
+            //开始计算两种产品的组合，回报高的优先购买，回报低的见剩下的,如果相同，优先买风险小的
+            if(leftReturn > rightReturn){
+                //现货区回报高的，在他能投资的最大值和持有资金选择最小的，
+                // 因为如果投资最大投资大于持有资金，那么他只能投所有的钱，
+                // 如果最大投资小于持有资金，那么就对最高回报全部投资
+                leftMaxInvestment = Math.min(leftMaxInvestment, money);
+                //投资完最大回报的，如果有剩余就投剩下资金和最大能投资第二产品的最小值，
+                //因为剩余的钱在 0~money - leftMaxInvestment，看他和第二产品的最大投资谁更小，就选哪个
+                rightMaxInvestment = Math.min(money - leftMaxInvestment, rightMaxInvestment);
+            }else if(leftReturn < rightReturn){
+                rightMaxInvestment = Math.min(rightMaxInvestment, money);
+                leftMaxInvestment = Math.min(money - rightMaxInvestment, leftMaxInvestment);
+            }else if(leftRisk < rightRisk){
+                leftMaxInvestment = Math.min(leftMaxInvestment, money);
+                rightMaxInvestment = Math.min(money - leftMaxInvestment, rightMaxInvestment);
+            }else{
+                rightMaxInvestment = Math.min(rightMaxInvestment, money);
+                leftMaxInvestment = Math.min(money - rightMaxInvestment, leftMaxInvestment);
+            }
+            //总的投资回报
+            thisAllMaxReturn = leftMaxInvestment * leftReturn + rightMaxInvestment * rightReturn;
+            if(maxReturn < thisAllMaxReturn){
+                maxReturn = thisAllMaxReturn;
+                selectedRisk = thisAllRisk;
+                bestInvestments = new int[number];
+                bestInvestments[left] = leftMaxInvestment;
+                bestInvestments[right] = rightMaxInvestment;
+            }
             right++;
         }
-
-        for (int best : bestInvestmentPlan){
-            System.out.print(best + " ");
+        for(int i : bestInvestments){
+            System.out.print(i + " ");
         }
     }
 
