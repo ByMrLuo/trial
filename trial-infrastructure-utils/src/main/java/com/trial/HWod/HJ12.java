@@ -66,7 +66,7 @@ public class HJ12 {
              * 如果max/2后有余数要向上取整也就是+1，那么我提前+2后正好是向上取整，
              * 因为本身就有余数，也就是 0<余数<除数 就算-1也不会有任何影响，-1就是为了整除的情况准备的
              * */
-            temp = (max + min + 2 -1)/2;
+            temp = (max + min + 1)/2;
             boolean check = check(temp, nums);
             if(check){
                 mid = temp;
