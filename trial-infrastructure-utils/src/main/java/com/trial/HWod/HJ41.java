@@ -81,4 +81,54 @@ public class HJ41 {
         sb.append(preLine);
         System.out.println(sb.toString());
     }
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        String s = scanner.nextLine();
+//        String[] sArrs = s.split(" ");
+//        //记录上一个点的坐标
+//        StringBuffer sb = new StringBuffer();
+//        int preRow = Integer.valueOf(sArrs[0]);
+//        int preLine = Integer.valueOf(sArrs[1]);
+//
+//
+//        int preToRow = 0;
+//        int preToLine = 0;
+//        for(int i = 2; i < sArrs.length; i++){
+//            int row = Integer.valueOf(sArrs[i]);
+//            int line = Integer.valueOf(sArrs[++i]);
+//
+//            int r = row - preRow;
+//            int l = line - preLine;
+//
+//
+//            if((preToRow ==0 && preToLine == 0) || preToRow * l - preToLine * r != 0){
+//                /**
+//                 * 向量x1y2-x2y1=0证明两个向量共线
+//                 * 不共线说明方向改变了
+//                 * */
+//                    sb.append(preRow);
+//                    sb.append(" ");
+//                    sb.append(preLine);
+//                    sb.append(" ");
+//
+//            }else if(preToRow * l - preToLine * r == 0 && preToRow*r + preToLine *l < 0){
+//                /**
+//                 * 共线但是反向也要打印 不能使用(x1,y1)=m(x2,y2)的方式因为如果存在0的情况,会有异常
+//                 */
+//                sb.append(preRow);
+//                sb.append(" ");
+//                sb.append(preLine);
+//                sb.append(" ");
+//            }
+//
+//            preRow = row;
+//            preLine = line;
+//            preToRow = r;
+//            preToLine = l;
+//        }
+//        sb.append(preRow);
+//        sb.append(" ");
+//        sb.append(preLine);
+//        System.out.println(sb.toString());
+//    }
 }
