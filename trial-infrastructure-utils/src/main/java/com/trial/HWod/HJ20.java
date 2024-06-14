@@ -47,6 +47,8 @@ public class HJ20 {
     static int[][] arrs = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
     //数位和数组
     static int[] numberPositions;
+    //存储坐标x,y一维数组中的的位置
+    static int[][] eaths;
 
     static int m;
     static int n;
@@ -69,6 +71,7 @@ public class HJ20 {
         //去重使用看是否是已经计算过的黄金点位
         HashSet<Integer> set = new HashSet<>();
         numberPositions = numberGPS(Math.max(m,n));
+        OnePoints();
         count = dfs(0, 0, count);
         System.out.println(count);
     }
@@ -81,6 +84,15 @@ public class HJ20 {
         return numberPositions;
     }
 
+    private static void OnePoints(){
+        eaths = new int[m][n];
+        for(int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++) {
+                eaths[i][j] = i * n + j;
+            }
+        }
+    }
+
     private static int dfs(int row, int line, int count){
         if(row < 0 || row >= m || line < 0 || line >= n){
             return count;
@@ -88,7 +100,7 @@ public class HJ20 {
         //计算在横纵坐标的数位和
         int position = numberPositions[row] + numberPositions[line];
         //计算每个二维数组坐标转换为一维数组的位置是唯一的。即 row * 每行的长度(就是列) + line(就是在横坐标的位置)
-        int gps = row * n  + line;
+        int gps = eaths[row][line];
         if(position > k || set.contains(gps)){
             return count;
         }
