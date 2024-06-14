@@ -40,7 +40,7 @@ public class HJ21 {
      * */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        long number = scanner.nextInt();
+        long number = scanner.nextLong();
         //每移动一格会增长的值最小是2开始的，即两个数的组合
         long left2Right = 2;
         boolean have = false;
