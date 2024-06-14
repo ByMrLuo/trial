@@ -77,7 +77,7 @@ public class HJ14 {
             upSizes[i] = scanner.nextInt();
         }
         //总回报，产品
-        List<HJDemo.Product> sortList = new ArrayList<>();
+        List<Product> sortList = new ArrayList<>();
         //进行暴露枚举组合，分为单个和两个产品组合
         for(int i = 0; i < number; i++){
             //外层是只购买单个产品
@@ -95,7 +95,7 @@ public class HJ14 {
             int[] arrs = new int[number];
             arrs[i] = upSize;
 
-            HJDemo.Product product = new HJDemo.Product(giveReturn,leftRisk, arrs);
+            Product product = new Product(giveReturn,leftRisk, arrs);
             sortList.add(product);
             for(int j = i+1; j < number; j++){
                 //内层是购买两个产品的组合
@@ -130,7 +130,7 @@ public class HJ14 {
                 int[] products = new int[number];
                 products[i] = leftUpSize;
                 products[j] = rightUpSize;
-                HJDemo.Product product1 = new HJDemo.Product(sumReturn, sumRisk, products);
+                Product product1 = new Product(sumReturn, sumRisk, products);
                 sortList.add(product1);
             }
         }
