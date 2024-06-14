@@ -41,9 +41,13 @@ public class HJ14 {
      * 说明
      *     投资第二项30个单位，第四项40个单位，总的投资风险为两项相加为4+6=10
      * */
+    //构建对象
     static class Product{
+        //总回报
         int sumReturn;
+        //总风险
         int sumRisk;
+        //各个产品的组合购买数量
         int[] upsizeArrs;
 
         Product(int sumReturn, int sumRisk, int[] upsizeArrs){
@@ -57,24 +61,26 @@ public class HJ14 {
         int number = scanner.nextInt();
         int money = scanner.nextInt();
         int allRisk = scanner.nextInt();
-
+        //各个产品回报率
         int[] returns = new int[number];
         for(int i = 0; i < number; i++){
             returns[i] = scanner.nextInt();
         }
-
+        //各个产品风险
         int[] risks = new int[number];
         for(int i = 0; i < number; i++){
             risks[i] = scanner.nextInt();
         }
-
+        //购买上限
         int[] upSizes = new int[number];
         for(int i = 0; i < number; i++){
             upSizes[i] = scanner.nextInt();
         }
         //总回报，产品
         List<HJDemo.Product> sortList = new ArrayList<>();
+        //进行暴露枚举组合，分为单个和两个产品组合
         for(int i = 0; i < number; i++){
+            //外层是只购买单个产品
             int leftReturn = returns[i];
             int leftUpSize = upSizes[i];
             int leftRisk = risks[i];
@@ -92,6 +98,7 @@ public class HJ14 {
             HJDemo.Product product = new HJDemo.Product(giveReturn,leftRisk, arrs);
             sortList.add(product);
             for(int j = i+1; j < number; j++){
+                //内层是购买两个产品的组合
                 int rightReturn = returns[j];
                 int rightUpSize = upSizes[j];
                 int rightRisk = risks[j];
@@ -100,7 +107,7 @@ public class HJ14 {
                 if(sumRisk > allRisk){
                     continue;
                 }
-
+                //优先购买回报率高的
                 if(leftReturn > rightReturn){
                     leftUpSize = Math.min(money,leftUpSize);
                     rightUpSize = Math.min(money - leftUpSize, rightUpSize);
@@ -108,7 +115,7 @@ public class HJ14 {
                     rightUpSize = Math.min(money, rightUpSize);
                     leftUpSize = Math.min(money - rightUpSize, leftUpSize);
                 }else{
-                    //回报相同的时候优先投资风险小的
+                    //回报相同的时候优先投资风险小的，如果都相等那就随便买了
                     if(leftRisk <= rightRisk){
                         leftUpSize = Math.min(money,leftUpSize);
                         rightUpSize = Math.min(money - leftUpSize, rightUpSize);
@@ -117,9 +124,9 @@ public class HJ14 {
                         leftUpSize = Math.min(money - rightUpSize, leftUpSize);
                     }
                 }
-
+                //总回报
                 int sumReturn = leftReturn * leftUpSize + rightReturn * rightUpSize;
-
+                //购买数量
                 int[] products = new int[number];
                 products[i] = leftUpSize;
                 products[j] = rightUpSize;
@@ -127,12 +134,14 @@ public class HJ14 {
                 sortList.add(product1);
             }
         }
-        Collections.sort(sortList, (a, b)->{
+        //按照回报率降序，回报相等按照风险升序，都相等随便
+        Collections.sort(sortList, (a,b)->{
             if(a.sumReturn == b.sumReturn){
                 return a.sumRisk - b.sumRisk;
             }
             return b.sumReturn - a.sumReturn;
         });
+        //注意这里可能是空的，因为风险超出预期都买不了
         int[] upsizeArrs = sortList.isEmpty() ? new int[number] : sortList.get(0).upsizeArrs;
         StringJoiner sj = new StringJoiner(" ");
         for (int upsize : upsizeArrs) {
