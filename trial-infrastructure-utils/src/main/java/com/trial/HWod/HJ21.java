@@ -1,6 +1,7 @@
 package com.trial.HWod;
 
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 /**
  * @description:
@@ -35,46 +36,38 @@ public class HJ21 {
      *     21=10+11
      *     其中 21=10+11，是最短的分解序列。
      * */
-    /**
-     * 这个解法没问题，但是当number大的时候会有用例超时
-     * */
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        long number = scanner.nextLong();
-        //每移动一格会增长的值最小是2开始的，即两个数的组合
-        long left2Right = 2;
-        boolean have = false;
-        //当right>number的时候跳出循环，说明已经不在符合条件，
-        //在最后的循环逻辑中会不断随着right >= number,增加left的值并初始化right，所以这里并不会一次就跳出
-        //符合条件的最短连续等差数列
-        while(left2Right <= number){
-            //等差公式 等差求和 =（首项+末项）*项数/2
-            long sum = (1 + left2Right) * left2Right / 2;
-            if(sum > number){
-                break;
+        Scanner sc = new Scanner(System.in);
+        long number = sc.nextLong();
+        long begin = 0;
+        long n = 0;
+        /**
+         * (a1+an)n/2 = number
+         * (2a1+n-1)n = 2number
+         * 2a1*n + n*n -n = 2number
+         * n*n = 2number - (2a1-1)n
+         * 因为a1和n都大于等于0 那么必然有 n*n <= 2number
+         * a1 = (2number/n +1-n)/2
+         * */
+        for(long i = 2; i*i <= 2*number; i++){
+            if(2 * number % i != 0 || (2 * number / i + 1 - i) % 2 != 0){
+                continue;
             }
-            /**
-             * 通过观察的值在差值为1等差的数值中，连续的m项的和整体向后每移动一格会增长m，
-             * 即第n项的m项和是number = （n-1）m + sum
-             * */
-            if((number -sum) % left2Right == 0){
-                long n = (number - sum)/left2Right + 1;
-                StringBuffer sb = new StringBuffer();
-                sb.append(number);
-                sb.append("=");
-                for(long i = 0; i < left2Right; i++){
-                    sb.append(n+i);
-                    if(i != left2Right-1){
-                        sb.append("+");
-                    }
-                }
-                System.out.println(sb.toString());
-                return;
-            }
-            left2Right++;
+            begin = (2 * number / i + 1 - i) / 2;
+            n = i;
+            break;
         }
 
-        System.out.print("N");
+        if(n == 0){
+            System.out.println("N");
+        }else{
+            StringJoiner sj = new StringJoiner("+",number+"=","");
+            for (long i = 0; i < n; i++) {
+                sj.add(String.valueOf(begin+i));
+            }
+            System.out.println(sj.toString());
+        }
     }
 //    public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
