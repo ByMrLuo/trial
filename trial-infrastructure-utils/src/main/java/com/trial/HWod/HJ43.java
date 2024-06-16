@@ -55,14 +55,14 @@ public class HJ43 {
                 System.out.println(-1);
                 return;
             }
-            //偏移量有重叠不合法,申请内存大于偏移量之后的内存不合法
-            if(memory[offset] == 1 || useMemory > 100 - offset){
-                System.out.println(-1);
-                return;
-            }
             //结束偏移量呆的位置
             int end = offset + useMemory;
 
+            //偏移量有重叠不合法,申请内存大于偏移量之后的内存不合法
+            if(end < 100){
+                System.out.println(-1);
+                return;
+            }
             for(int i = offset; i < end; i++){
                 //必须连续都为0，否则就是被占用重叠，不合法
                 if(memory[i] == 1){
@@ -72,42 +72,26 @@ public class HJ43 {
                 memory[i] = 1;
             }
         }
-        HashMap<Integer, Integer> offsetAndMemory = new HashMap<>();
-
-        for (int i = 0; i < 100; i++) {
+        //内存升序，然后偏移量降序，因为要优先匹配最合适的
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1] == b[1] ? a[0] -b[0] : a[1]-b[1]);
+        for (int i = 0; i < memory.length; i++) {
             if(memory[i] == 1){
                 continue;
             }
-            int countMemory = 0;
-            for(int j = i; j < 100; j++){
-                if(memory[j] == 1){
-                    i = j + 1;
-                    break;
-                }
-                countMemory++;
-                //记录offset和空闲的memory
-                offsetAndMemory.put(i, countMemory);
-                //这里存在边界问题，如果j=length-1还是0那么i将不会被重新赋值j+1，
-                // 而是退出了循环，那这样外层循环就会从第二个0开始一直到1或者到数组结束
-                // 不断地添加错误的值到map中，导致后续的排序完全失效
-                if(j == 99){
-                    i = j + 1;
-                }
+            int[] arrs = new int[2];
+            arrs[0] = i;
+            int end = i;
+            while(end < 100 && memory[end] == 0){
+                end++;
             }
+            arrs[1] = end - i;
+            pq.add(arrs);
+            i = end;
         }
-        ArrayList<Map.Entry<Integer, Integer>> sortList = new ArrayList<>(offsetAndMemory.entrySet());
-        //优先根据内存升序，然后内存相等的按照offset升序
-        Collections.sort(sortList, (a,b)->{
-            if(a.getValue().equals(b.getValue())){
-                return a.getKey() -b.getKey();
-            }
-            return a.getValue() - b.getValue();
-        });
-        for (Map.Entry<Integer, Integer> entry : sortList) {
-            int o = entry.getKey();
-            int m = entry.getValue();
-            if(m >= hopeMemory){
-                System.out.println(o);
+        while(!pq.isEmpty()){
+            int[] poll = pq.poll();
+            if(poll[1] >= hopeMemory){
+                System.out.println(poll[0]);
                 return;
             }
         }
