@@ -83,28 +83,24 @@ public class HJ42 {
         }
         scanner.nextLine();
 
-        int[] specilsCount = new int[m];
-        HashMap<Integer, Integer> sortMap = new HashMap<>();
+        Integer[][] testsCount = new Integer[m][2];
         for (int i = 0; i < m; i++) {
             String str = scanner.nextLine();
             String[] specilsStr = str.split(" ");
+            int count = 0;
             for (String specil : specilsStr) {
                 //下标索引是用例编号，对应的weights[n-1]，这里要-1，
                 // 因为他写的特性1对应的是索引weights[0]的优先值，
                 // 进行直接累计即可，
-                specilsCount[i] += weights[Integer.valueOf(specil) - 1];
+                int index = Integer.valueOf(specil);
+                count += weights[index - 1];
             }
-            sortMap.put(i + 1, specilsCount[i]);
+            //这里因为用例是从1开始，所以下标索引要+1
+            testsCount[i] = new Integer[]{i+1, count};
         }
-        ArrayList<Map.Entry<Integer, Integer>> arrayList = new ArrayList(sortMap.entrySet());
-        Collections.sort(arrayList,(a, b)->{
-            if(a.getValue() == b.getValue()){
-                return a.getKey() - b.getKey();
-            }
-            return b.getValue() - a.getValue();
-        });
-        for (Map.Entry<Integer, Integer> entry : arrayList) {
-            System.out.println(entry.getKey());
+        Arrays.sort(testsCount,(a,b)-> a[1] == b[1] ? a[0]-b[0] :b[1] - a[1]);
+        for (Integer[] count : testsCount) {
+            System.out.println(count[0]);
         }
     }
 }
