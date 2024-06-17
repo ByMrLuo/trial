@@ -30,31 +30,23 @@ public class HJ46 {
         String str = scanner.nextLine();
         String[] strArrs = str.split(",");
 
-        LinkedHashMap<Integer, Integer> sortMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> sortMap = new LinkedHashMap<>();
         for (String s : strArrs) {
-            int num = Integer.valueOf(s);
-            if(sortMap.containsKey(num)){
-                int value = sortMap.get(num);
+            if(sortMap.containsKey(s)){
+                int value = sortMap.get(s);
                 value++;
-                sortMap.put(num, value);
+                sortMap.put(s, value);
             }else{
-                sortMap.put(num,1);
+                sortMap.put(s,1);
             }
         }
-        List<Map.Entry<Integer, Integer>> sort = new ArrayList<>(sortMap.entrySet());
-        Collections.sort(sort, (a,b)->{
-            if(a.getValue().equals(b.getValue())){
-                return 0;
-            }
-            return b.getValue() - a.getValue();
-        });
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < sort.size(); i++) {
-            sb.append(sort.get(i).getKey());
-            if(i != sort.size()-1){
-                sb.append(",");
-            }
+        List<Map.Entry<String, Integer>> sortList = new ArrayList<>(sortMap.entrySet());
+        //因为linkedHash特性所以相等的时候位置不需要变动
+        Collections.sort(sortList, (a,b)-> b.getValue() - a.getValue());
+        StringJoiner sj= new StringJoiner(",");
+        for (Map.Entry<String, Integer> entry : sortList) {
+            sj.add(entry.getKey());
         }
-        System.out.println(sb.toString());
+        System.out.println(sj.toString());
     }
 }
