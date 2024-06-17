@@ -63,41 +63,41 @@ public class HJ48 {
         char[] chars = str.toCharArray();
         /**
          * 本题思路滑动窗口，left左缩进，right右扩展，始终保持窗口内只存在一个字母
-         * 当存在一个字母的时候开始统计长度，所以存在两种这情况：
-         * 1，始终只有一个字母，即 maxLength = 1；
-         * 2. 只存在一个字母，多个数字，maxLength保留最长的结果
-         * 那么这时候我们在输出的时候就要判定，maxLength >=2 才是有效长度，其他的只能是不符合要求输出-1
+         * 当满足包含一个字母和x个数字的时候就更新长度，每次都更新，这样可以避免多个字母的时候更新出现的
+         * 边界问题：
+         * 比如最后一个是字母但是没有出现多个，这时候会不更新，但是满足条件就更新不会存在这个边界问题，新增加了
+         * 数字统计更加容易方便判定是否已经满足更新条件
          * */
         int left = 0;
         int right = 0;
         //统计字母个数
-        int count = 0;
+        int letterCount = 0;
+        int numberCount = 0;
         int maxLength = 0;
         while(right < chars.length){
-            if(chars[right]  <= 'z' && chars[right] >= 'A'){
-                count++;
+            //优化此处逻辑，原来的判定存在不严谨的问题
+            if(Character.isLowerCase(chars[right]) || Character.isUpperCase(chars[right])){
+                letterCount++;
+            }else{
+                numberCount++;
             }
-            //出现字母就开始统计最长长度
-            if(count == 1){
-                maxLength = Math.max(maxLength, right - left + 1);
-            }
-            /**
-             * 当字母统计count > 1的时候，需要缩减left边界,直到再次count=1，left停止移动
-             * right继续向右扩展寻找更大长度，这样我们可以保证窗口始终只包含一个字母，
-             * 尽管可能一直到最后都只有一个字母
-             * */
-            while(count > 1){
-                if(chars[left]  <= 'z' && chars[left] >= 'A'){
-                    count--;
+            if(letterCount > 1){
+                //缩减窗口
+                if(Character.isLowerCase(chars[left]) || Character.isUpperCase(chars[left])){
+                    letterCount--;
+                }else{
+                    numberCount--;
                 }
                 left++;
+            }else if(letterCount == 1 && numberCount > 0){
+                //符合一个字母n个数字就更新长度
+                maxLength = Math.max(maxLength, right - left + 1);
             }
             right++;
         }
         /**
-         * 通过上述计算，存在maxLength=0，全都是数字，maxLength=1，只包含了一个字母两种不符合的情况
-         * 但凡maxLength>=2说明存在了符合标准的数据就要正常输出长度
+         *
          * */
-        System.out.println(maxLength >= 2 ? maxLength : -1);
+        System.out.println(maxLength > 0 ? maxLength : -1);
     }
 }
