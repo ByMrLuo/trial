@@ -40,39 +40,23 @@ public class HJ59 {
      *     一次最多执行4个任务，最少耗时5s
      * */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        //一次最多执行任务
-        int maxUse = scanner.nextInt();
-        //任务数组的长度
-        int number = scanner.nextInt();
-
-        scanner.nextLine();
-        String str = scanner.nextLine();
-        String[] strArrs = str.split(" ");
-        int[] numArrs = new int[number];
+        Scanner sc = new Scanner(System.in);
+        int max = sc.nextInt();
+        int number = sc.nextInt();
+        int[] arrs = new int[number];
         for (int i = 0; i < number; i++) {
-            numArrs[i] = Integer.valueOf(strArrs[i]);
+            arrs[i] = sc.nextInt();
         }
-        //最少耗时
-        int useMin = 0;
-        int left = 1;
-        int count = numArrs[0];
-        while(true){
-            if(count <= 0 && left == number){
-                break;
+        int count = 0;
+        int temp = 0;
+        for (int i = 0; i < arrs.length; i++){
+            temp = temp + arrs[i] - max > 0 ? temp + arrs[i] - max : 0;
+            count++;
+            if(i == arrs.length - 1 && temp > 0){
+                count += (temp + max - 1) / max;
             }
-            if(left < number){
-                //每次小于0的时候直接归零，大于0的时候要进行累计
-                count = count - maxUse < 0 ? 0 : count - maxUse;
-                count += numArrs[left];
-                left++;
-            }else{
-                count -= maxUse;
-            }
-            useMin++;
-
         }
-        System.out.println(useMin);
+        System.out.println(count);
     }
 
 

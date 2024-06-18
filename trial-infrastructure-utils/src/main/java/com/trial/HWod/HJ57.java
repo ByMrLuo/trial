@@ -84,4 +84,31 @@ public class HJ57 {
         }
         System.out.println(new String(chars));
     }
+        /**另一种思路已经验证用例通过，是从后开始和最小的字符串比，
+         * 这样可以避免相同字母的出现不需要去遍历相同字母的最后一个
+         * 因为我们本来就是从最后开始的，但是要注意的一点是，相同位置的字符最小和原字符串不能能相等
+         * 相等要直接下一个
+         * */
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        String str = sc.nextLine();
+//        char[] chars = str.toCharArray();
+//        char[] minChars = Arrays.copyOf(chars, chars.length);
+//        Arrays.sort(minChars);
+//        for (int i = 0; i < minChars.length; i++) {
+//            for (int j = chars.length - 1; j >= 0; j--) {
+//               if(minChars[i] == chars[i] ){
+//                    break;
+//                }
+//                if(i != j && minChars[i] == chars[j]){
+//                    char temp = chars[j];
+//                    chars[j] = chars[i];
+//                    chars[i] = temp;
+//                    System.out.println(new String(chars));
+//                    return;
+//                }
+//            }
+//        }
+//        System.out.println(new String(chars));
+//    }
 }
