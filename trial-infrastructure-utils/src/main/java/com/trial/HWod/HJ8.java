@@ -1,8 +1,6 @@
 package com.trial.HWod;
 
-import java.lang.reflect.GenericDeclaration;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -49,68 +47,67 @@ public class HJ8 {
      * 说明
      *     按shuxue成绩排名，依次是xiaohua、fangfang、minmin
      * */
+    static class Student{
+        String name;
+        int[] results;
+
+        Student(String name, int[] results){
+            this.name = name;
+            this.results = results;
+        }
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int peopleNum = scanner.nextInt();
-        int classNum = scanner.nextInt();
+        //n个人，m个课程
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
         scanner.nextLine();
-        String className = scanner.nextLine();
-        String[] classNameArrays = className.split(" ");
-        int n = 0;
-        //list<<学生姓名，成绩>>
-        List<Map<String, Integer>> lists = new ArrayList<>();
+        /**所有课程*/
+        String str = scanner.nextLine();
+        String[] clazzs = str.split(" ");
 
-        for (int i = 0; i < classNum; i++){
-            Map<String, Integer> peopleNameAndResult = new HashMap();
-            lists.add(peopleNameAndResult);
-        }
-        Map<String, Integer> sum = new HashMap();
-        while(n < peopleNum){
-            String peopleResult = scanner.nextLine();
-            String [] resultArrs = peopleResult.split(" ");
-            String peropleName = resultArrs[0];
-            int count = 0;
-            int length = resultArrs.length;
-            for(int i = 1; i < length; i++){
-                //获取对应科目的人员成绩目录
-                Map<String, Integer> map = lists.get(i-1);
-                //姓名及成绩
-                Integer result = Integer.valueOf(resultArrs[i]);
-                map.put(peropleName, result);
-                count += result;
+        ArrayList<Student> sortStudents = new ArrayList<>();
+        /**读取每个人的各科成绩*/
+        for (int i = 0; i < n; i++) {
+            String s = scanner.nextLine();
+            String[] sArrs = s.split(" ");
+            //这里之所以还是这个长度，是因为结果我们放了一个总分数在最后
+            int[] results = new int[sArrs.length];
+            int sum = 0;
+            for (int j = 1; j < sArrs.length; j++) {
+                results[j - 1] = Integer.valueOf(sArrs[j]);
+                sum += results[j - 1];
             }
-            sum.put(peropleName, count);
-            n++;
+            /**总分数放在最后*/
+            results[sArrs.length -1] = sum;
+            //sArrs[0]是姓名
+            Student student = new Student(sArrs[0], results);
+            sortStudents.add(student);
         }
-
-
-        String sortClassName = scanner.nextLine();
-
-        Map<String ,Integer> peopleMap = new HashMap<>();
-        for(int i = 0; i < classNameArrays.length; i++){
-            if(sortClassName.equals(classNameArrays[i])){
-                peopleMap = lists.get(i);
+        /**读取排序的课程*/
+        String clazz = scanner.nextLine();
+        /**
+         * 默认排序的成绩是总成绩，如果有对应匹配的就会转化为对应的课程下标索引
+         * 如果没有就是按总成绩，总成绩在results成绩数组最后一个元素也就是课程长度的位置
+         * */
+        int index = clazzs.length;
+        for (int i = 0; i < clazzs.length; i++) {
+            if(clazz.equals(clazzs[i])){
+                index = i;
             }
         }
-        //降序 compare放1表示要交换位置 -1和0表示不交换位置
-        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                if(o1.getValue().equals(o2.getValue())){
-                    return o1.getKey().compareTo(o2.getKey()) ;
-                }
-                return o2.getValue() - o1.getValue();
-            }
-        };
-        ArrayList<Map.Entry<String, Integer>> sort = null;
-        if(peopleMap.isEmpty()){
-            sort = new ArrayList<>(sum.entrySet());
-        }else{
-            sort = new ArrayList<>(peopleMap.entrySet());
+        /**
+         * 因为匿名表达式里面的不能是变量，需要一个常量，所以这里才有复制这一步
+         * */
+        int sortIntdex = index;
+        /**按照对应的课程成绩下标索引升序，分数相等按照名字字典顺序排序*/
+        Collections.sort(sortStudents, (a,b)-> a.results[sortIntdex] == b.results[sortIntdex] ?
+                a.name.compareTo(b.name) :
+                b.results[sortIntdex]- a.results[sortIntdex]);
+        StringJoiner sj = new StringJoiner(" ");
+        for (Student student : sortStudents) {
+            sj.add(student.name);
         }
-        Collections.sort(sort,comparator);
-        for (Map.Entry entry: sort){
-            System.out.print(entry.getKey() + " ");
-        }
+        System.out.println(sj.toString());
     }
 }
