@@ -13,25 +13,42 @@ public class HJ74 {
      * */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int number = scanner.nextInt();
-        int[] tallArrs = new int[number];
-        for (int i = 0; i < number; i++) {
-            tallArrs[i] = scanner.nextInt();
-        }
-        StringJoiner sj = new StringJoiner(" ");
-        for (int i = 0; i < number; i++) {
-            for (int j = i+1; j < number; j++) {
-                if(tallArrs[i] < tallArrs[j]){
-                    sj.add(String.valueOf(j));
+        int num = scanner.nextInt();
+        //构建一个优先队列，按照人员身高进行升序排序
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)-> a[1] - b[1]);
+        //记录谁是自己朋友的数组
+        int[] indexs = new int[num];
+        for (int i = 0; i < num; i++) {
+            //获取输入的身高和他自己的索引，添加到队列
+            int height = scanner.nextInt();
+            /**
+             * 将队列中的存在的和后面输入的值进行比对，
+             * 有比自己高的的就出栈将自己数组peek[0]中拿到自己的索引，然后
+             * 去改变indexs数组中对应位置的值，改成配对成功的索引
+             * */
+            while(!pq.isEmpty()){
+                int[] peek = pq.peek();
+                if(peek[1] < height){
+                    int index = peek[0];
+                    indexs[index] = i;
+                    pq.poll();
+                }else{
                     break;
                 }
-                if(j == number-1){
-                    sj.add(String.valueOf(0));
-                }
             }
-            if(i == number-1){
-                sj.add(String.valueOf(0));
-            }
+            /**
+             * 然后将每次后输入的入队列等待更后面的来配对
+             * 直到全部结束，这样就表示我们配对完成
+             * */
+            int[] heightAndIndex = new int[]{i, height};
+            pq.add(heightAndIndex);
+        }
+        /**
+         * 遍历输出对应的位置的数据
+         * */
+        StringJoiner sj = new StringJoiner(" ");
+        for (int index : indexs) {
+            sj.add(String.valueOf(index));
         }
         System.out.println(sj.toString());
     }
