@@ -54,20 +54,15 @@ public class HJ39 {
              * 如果两个小区人数相等那么可以算在一个小区，但是当下标 right - left 之差已经和childes[left]相等的时候
              * 说明这个可能在同一小区的人已经满了，那么这个right下标的值只能下另外一个小区的
              */
-            if(childes[left] == childes[right] && (right-left) <= childes[left]){
-                right++;
-            }else{
+            if(childes[left] != childes[right] || (right-left) > childes[left]){
                 /**
                  * 当小区人数不同和相同但是下标之差已经和childes[left]相等的时候就必须要统计人数
                  * 然后重新初始化双指针，要记住的是这个时候的下标right的值还没有被统计，一定要加上，
                  * 并且累计的时候是没有算上自己这个人的，要+1
                  * */
                 left = right;
-                right = left + 1;
-                if(left < length){
-                    count += childes[left] + 1;
-                }
-
+                count += childes[left] + 1;
+                right++;
             }
         }
         System.out.println(count);
