@@ -35,38 +35,27 @@ public class HJ28 {
          * 因为下一次就会作为父节点进行各个分支的累加
          * */
         Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
-        String[] strArrs = str.split(" ");
-        int length = strArrs.length;
-        int[] allTimes = new int[length];
-        for(int i = 0; i < length; i++){
-            allTimes[i] = Integer.valueOf(strArrs[i]);
+        ArrayList<Integer> list = new ArrayList<>();
+        while(scanner.hasNextInt()){
+            int time = scanner.nextInt();
+            list.add(time);
         }
-        //存储所有的传话时长不为-1的节点，在使用时完成移除
-        Deque<Integer> queue = new LinkedList<>();
-        queue.addFirst(0);
-        int maxTime = allTimes[0];
-        //不为空则一直对各项累加
-        while(!queue.isEmpty()){
-            Integer index = queue.removeLast();
-            int left = 2 * index + 1;
-            int right = 2 * index + 2;
-            /**
-             * -1为空节点不必统计
-             * 统计完后每次记录子节点，因为如果又下一次循环他们将作为父节点的索引对下级节点进行累加
-             * */
-            if(left < length && allTimes[left] != -1){
-                allTimes[left] += allTimes[index];
-                queue.addFirst(left);
-                maxTime = Math.max(maxTime, allTimes[left]);
+        //遍历是所有节点，作为根节点
+        for (int i = 0; i < list.size(); i++) {
+            int root = list.get(i);
+            //计算当前节点的左右子节点
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            //更新当前位置的时间，累计他之前的时间
+            if(left < list.size() && list.get(left) != -1){
+                list.set(left, root + list.get(left));
             }
-
-            if(right < length && allTimes[right] != -1){
-                allTimes[right] += allTimes[index];
-                queue.addFirst(right);
-                maxTime = Math.max(maxTime, allTimes[right]);
+            if(right < list.size() && list.get(right) != -1){
+                list.set(right, root + list.get(right));
             }
         }
-        System.out.println(maxTime);
+        //降序排序，最后一个就是最大时间
+        Collections.sort(list);
+        System.out.println(list.get(list.size() - 1));
     }
 }
