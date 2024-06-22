@@ -60,15 +60,14 @@ public class HJ52 {
         int right = 0;
         HashMap<Character, Integer> map = new HashMap<>();
         while(right < chars.length){
-            if(chars[left] != chars[right]){
-               left = right;
-               continue;
-            }
-            if(map.containsKey(chars[left])){
-                int max = Math.max(map.get(chars[left]), right - left +1);
-                map.put(chars[left],max);
+            if(chars[left] == chars[right]){
+                //存在就返回value，不存在就返回1
+                int num = map.getOrDefault(chars[left], 1);
+                //比较当前的长度和已经存入的长度，保留最长的
+                map.put(chars[left], Math.max(num,right - left + 1));
             }else{
-                map.put(chars[left],1);
+                left = right;
+                continue;
             }
             right++;
         }
