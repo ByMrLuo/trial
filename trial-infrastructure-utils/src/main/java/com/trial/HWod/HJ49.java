@@ -51,66 +51,127 @@ public class HJ49 {
      *     连起来即12abc-abCABc4aB@
      * */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int k = sc.nextInt();
-        sc.nextLine();
-        String s = sc.nextLine();
-        //切割字符串
-        String[] sArrs = s.split("-");
+        Scanner scanner = new Scanner(System.in);
+        int k = scanner.nextInt();
+        scanner.nextLine();
+        String str = scanner.nextLine();
+        String[] strArrs = str.split("-");
         /**
-         * 除sArrs[0]以外的都转换为char
+         * 拆解为字符添加到list
          * */
-        ArrayList<Character> charList = new ArrayList<>();
-        for (int i = 1; i < sArrs.length; i++) {
-            char[] chars = sArrs[i].toCharArray();
+        ArrayList<Character> list = new ArrayList<>();
+        for (int i = 1; i < strArrs.length; i++) {
+            char[] chars = strArrs[i].toCharArray();
             for (char ch : chars) {
-                charList.add(ch);
+                list.add(ch);
             }
         }
-
         StringJoiner sj = new StringJoiner("-");
-        //定义几个条件变量
-        int length = 0;
-        int lowCount = 0;
-        int upCount = 0;
-        StringBuffer sb = new StringBuffer();
-        int size = charList.size();
         /**
-         * 遍历字符集合拼接字符串
+         * 定义一个偏移量，作为每次拼接时候就得起始位置
          * */
-        for (int i = 0; i < size; i++){
-            char ch = charList.get(i);
-            if(Character.isUpperCase(ch)){
-                upCount++;
-            }else if(Character.isLowerCase(ch)){
-                lowCount++;
-            }
-            sb.append(ch);
-            length++;
-            if(length == k){
-                String kStr = sb.toString();
-                if(upCount > lowCount){
-                    kStr = kStr.toUpperCase();
-                }else if(upCount < lowCount){
-                    kStr = kStr.toLowerCase();
+        int offset = 0;
+        for (int i = 0; i < list.size(); i++) {
+            /**
+             * 定义拼接对象和统计大小写的变量
+             * */
+            StringBuffer sb = new StringBuffer();
+            int lowCount = 0;
+            int upCount = 0;
+            /**
+             * 开始拼接，起始为偏移量的位置，字符长度为k，但是还要小于list的长度
+             * 并且更新i的位置，因为每拼接完k个长度就要添加到sj对象中，而下次开始的
+             * i的位置实在当前的j的基础上+1，也就是拼接完后的i++这一步，所以在最后要更新
+             * j的位置到i
+             * */
+            for (int j = offset; j < offset + k && j < list.size(); j++) {
+                Character letter = list.get(j);
+                if(Character.isUpperCase(letter)){
+                    upCount++;
+                }else if(Character.isLowerCase(letter)){
+                    lowCount++;
                 }
-                sj.add(kStr);
-                length = 0;
-                lowCount = 0;
-                upCount = 0;
-                sb = new StringBuffer();
-            }else if(i == size - 1 && length < k){
-                /**边界，到最后也没有到k长度也要拼上，并且按要求转换大小写*/
-                String kStr = sb.toString();
-                if(upCount > lowCount){
-                    kStr = kStr.toUpperCase();
-                }else if(upCount < lowCount){
-                    kStr = kStr.toLowerCase();
-                }
-                sj.add(kStr);
+                sb.append(letter);
+                i = j;
             }
+            /**
+             * 同时重新给偏移量赋值，为下次拼接做准备
+             * */
+            offset += k;
+            String appendStr = sb.toString();
+            if(upCount > lowCount){
+                appendStr = appendStr.toUpperCase();
+            }else if(upCount < lowCount){
+                appendStr = appendStr.toLowerCase();
+            }
+            sj.add(appendStr);
         }
-        /**这里需要注意，可能只有sArr[0]没有后面的拼接所以，这里要做好边界处理*/
-        System.out.println(sj.toString().isEmpty() ? sArrs[0] : sArrs[0] + "-"+ sj.toString());
+        /**会存在只有一个头的情况，所以还要注意是否拼接*/
+        System.out.println(sj.toString().isEmpty() ? strArrs[0] : strArrs[0] +"-"+ sj.toString());
     }
+
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int k = sc.nextInt();
+//        sc.nextLine();
+//        String s = sc.nextLine();
+//        //切割字符串
+//        String[] sArrs = s.split("-");
+//        /**
+//         * 除sArrs[0]以外的都转换为char
+//         * */
+//        ArrayList<Character> charList = new ArrayList<>();
+//        for (int i = 1; i < sArrs.length; i++) {
+//            char[] chars = sArrs[i].toCharArray();
+//            for (char ch : chars) {
+//                charList.add(ch);
+//            }
+//        }
+//
+//        StringJoiner sj = new StringJoiner("-");
+//        //定义几个条件变量
+//        int length = 0;
+//        int lowCount = 0;
+//        int upCount = 0;
+//        StringBuffer sb = new StringBuffer();
+//        int size = charList.size();
+//        /**
+//         * 遍历字符集合拼接字符串
+//         * */
+//        for (int i = 0; i < size; i++){
+//            char ch = charList.get(i);
+//            if(Character.isUpperCase(ch)){
+//                upCount++;
+//            }else if(Character.isLowerCase(ch)){
+//                lowCount++;
+//            }
+//            sb.append(ch);
+//            length++;
+//            if(length == k){
+//                String kStr = sb.toString();
+//                if(upCount > lowCount){
+//                    kStr = kStr.toUpperCase();
+//                }else if(upCount < lowCount){
+//                    kStr = kStr.toLowerCase();
+//                }
+//                sj.add(kStr);
+//                length = 0;
+//                lowCount = 0;
+//                upCount = 0;
+//                sb = new StringBuffer();
+//            }else if(i == size - 1 && length < k){
+//                /**边界，到最后也没有到k长度也要拼上，并且按要求转换大小写*/
+//                String kStr = sb.toString();
+//                if(upCount > lowCount){
+//                    kStr = kStr.toUpperCase();
+//                }else if(upCount < lowCount){
+//                    kStr = kStr.toLowerCase();
+//                }
+//                sj.add(kStr);
+//            }
+//        }
+//        /**这里需要注意，可能只有sArr[0]没有后面的拼接所以，这里要做好边界处理*/
+//        System.out.println(sj.toString().isEmpty() ? sArrs[0] : sArrs[0] + "-"+ sj.toString());
+//    }
+
 }
