@@ -3,6 +3,7 @@ package com.trial.HWod;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 /**
  * @description:
@@ -43,37 +44,35 @@ public class HJ9 {
      * */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Integer> priceList = new ArrayList<>();
         String str = sc.nextLine();
-        String[] arr = str.split(" ");
-        for(String s : arr){
-           priceList.add(Integer.valueOf(s));
+        String[] strArrs = str.split(" ");
+
+        int[] prices = new int[strArrs.length];
+        for (int i = 0; i < strArrs.length; i++) {
+            prices[i] = Integer.valueOf(strArrs[i]);
         }
         int left = 0;
-        int right = 1;
-        List<Integer> countPriceList = new ArrayList<>();
-        int size = priceList.size();
-        while(left < size){
-            right = right % size;
-            int price = priceList.get(left);
-            if(right == left){
-                countPriceList.add(price);
+        int right = 0;
+        //直接拼接
+        StringJoiner sj = new StringJoiner(" ");
+        while(left < prices.length){
+            //对right取余可以达到循环的效果
+            right = (right + 1) % prices.length;
+            //当下标相等说明没有，那么就是原价
+            if(left == right){
+                sj.add(String.valueOf(prices[left]));
                 left++;
-                right = left+1;
+                right = left;
                 continue;
             }
-            int nextPrice = priceList.get(right);
-            if(nextPrice < price){
-                price += nextPrice;
-                countPriceList.add(price);
+            //有比他便宜的则赠送，相加后拼接到sj，然后开始下一道寿司的价格
+            if(prices[left] > prices[right]){
+                sj.add(String.valueOf(prices[left] + prices[right]));
                 left++;
-                right = left+1;
-            }else{
-                right++;
+                right = left;
             }
+
         }
-        for(int countPrice : countPriceList){
-            System.out.print(countPrice + " ");
-        }
+        System.out.println(sj.toString());
     }
 }
