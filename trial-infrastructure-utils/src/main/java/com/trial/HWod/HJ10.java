@@ -73,38 +73,39 @@ public class HJ10 {
      *     leo: 29*5 + 27*6 + 36*6 + 43*1 + 178*2 = 922
      *     ava: 29*5 + 27*6 + 36*6 + 43*1 + 178*2 = 922
      * */
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int num = scanner.nextInt();
-        scanner.nextLine();
-        String str = scanner.nextLine();
-        String[] weights = str.split(" ");
-        HashMap<String, Integer> map = new HashMap<>();
-        int i = 0;
-        while(i < num){
-            String line = scanner.nextLine();
-            String[] lineArrs = line.split(" ");
-            String name = lineArrs[0];
-            int count = 0;
-            for(int j = 1;j< lineArrs.length;j++){
-                count += Integer.valueOf(lineArrs[j]) * Integer.valueOf(weights[j-1]);
-            }
-            map.put(name, count);
-            i++;
+    static class Product{
+        String name;
+        int sumWeight;
+        String lowName;
+        Product(String name, int sumWeight){
+            this.name = name;
+            this.sumWeight = sumWeight;
+            this.lowName = name.toLowerCase();
         }
-        Comparator<Map.Entry<String ,Integer>> comparator = new Comparator<Map.Entry<String ,Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                if(o2.getValue().equals(o1.getValue())){
-                    return o1.getKey().toLowerCase().compareTo(o2.getKey().toLowerCase());
-                }
-                return o2.getValue() - o1.getValue();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int[] weights = new int[5];
+        for (int i = 0; i < 5; i++) {
+            weights[i] = sc.nextInt();
+        }
+        sc.nextLine();
+        ArrayList<Product> products = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            String str = sc.nextLine();
+            String[] sArrs = str.split(" ");
+            String name = sArrs[0];
+            int sumWeight = 0;
+            for (int j = 1; j < sArrs.length; j++) {
+                sumWeight += Integer.valueOf(sArrs[j]) * weights[j - 1];
             }
-        };
-        ArrayList<Map.Entry<String, Integer>> sortList = new ArrayList<>(map.entrySet());
-        Collections.sort(sortList, comparator);
-        for(Map.Entry entry : sortList){
-            System.out.println(entry.getKey());
+            products.add(new Product(name, sumWeight));
+        }
+        Collections.sort(products,(a,b)-> a.sumWeight == b.sumWeight ?
+                a.lowName.compareTo(b.lowName) : b.sumWeight - a.sumWeight);
+        for (Product product : products) {
+            System.out.println(product.name);
         }
     }
 }
