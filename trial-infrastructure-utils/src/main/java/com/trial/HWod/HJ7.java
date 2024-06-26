@@ -49,54 +49,39 @@ public class HJ7 {
      * */
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int m = scanner.nextInt();
-        int n = scanner.nextInt();
-        Map<Integer, List<List<Integer>>> map = new HashMap();
-        int row = 0;
-        int line =  0;
-        int maxArea = 1;
-        while(row < m){
-            int point = scanner.nextInt();
-            if(point != 0){
-                if(map.containsKey(point)){
-                    List<List<Integer>> peoplePoint = map.get(point);
-                    List<Integer> lList = peoplePoint.get(0);
-                    lList.add(line);
-                    List<Integer> wList  = peoplePoint.get(1);
-                    wList.add(row);
-                }else{
-                    List<List<Integer>> pointList  = new ArrayList<>();
-                    //存放所有列坐标
-                    List<Integer> lList  = new ArrayList<>();
-                    //存放所有行坐标
-                    List<Integer> wList  = new ArrayList<>();
-                    lList.add(line);
-                    wList.add(row);
-                    pointList.add(lList);
-                    pointList.add(wList);
-                    map.put(point ,pointList);
+        Scanner sc = new Scanner(System.in);
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+        HashMap<Integer, Map<String, List<Integer>>> allAreaMap = new HashMap<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int val = sc.nextInt();
+                if(val != 0){
+                    Map<String, List<Integer>> areaMap = allAreaMap.getOrDefault(val, new HashMap<String, List<Integer>>());
+
+                    List<Integer> row = areaMap.getOrDefault("row", new ArrayList<Integer>());
+                    row.add(i);
+                    List<Integer> line = areaMap.getOrDefault("line", new ArrayList<Integer>());
+                    line.add(j);
+
+                    areaMap.put("row", row);
+                    areaMap.put("line", line);
+                    allAreaMap.put(val, areaMap);
                 }
             }
-            line++;
-            if(line == n){
-                row++;
-                line = 0;
-            }
         }
-        Set<Integer> keySet = map.keySet();
-        for(Integer key: keySet){
-            List<List<Integer>> peoplePoint = map.get(key);
-            int l = 1;
-            int w = 1;
-            List<Integer> lList = peoplePoint.get(0);
-            List<Integer> wList = peoplePoint.get(1);
-            Collections.sort(lList);
-            Collections.sort(wList);
-            l = lList.get(lList.size()-1) - lList.get(0)+1;
-            w = wList.get(wList.size()-1) - wList.get(0)+1;
-            maxArea = Math.max(maxArea, l * w);
+        int maxArea = 0;
+        for (Map.Entry<Integer, Map<String, List<Integer>>> entry : allAreaMap.entrySet()) {
+            Map<String, List<Integer>> areaMap = entry.getValue();
+            List<Integer> rowList = areaMap.get("row");
+            Collections.sort(rowList);
+            List<Integer> lineList = areaMap.get("line");
+            Collections.sort(lineList);
+            int row = rowList.get(rowList.size() - 1) - rowList.get(0) + 1;
+            int line = lineList.get(lineList.size() -1) - lineList.get(0) + 1;
+            maxArea = Math.max(maxArea, row * line);
         }
+
         System.out.println(maxArea);
     }
 }
