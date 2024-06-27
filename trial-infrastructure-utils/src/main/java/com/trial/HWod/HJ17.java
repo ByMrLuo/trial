@@ -70,66 +70,51 @@ public class HJ17 {
      *     可以拼写字符串"apple"和“car”
      * */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int number = scanner.nextInt();
-        scanner.nextLine();
-        String[] words = new String[number];
-        for(int i = 0; i < number; i++){
-            words[i] = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        sc.nextLine();
+        String[] words = new String[num];
+        for (int i = 0; i < num; i++) {
+            words[i] = sc.nextLine();
+        }
+        String str = sc.nextLine();
+        char[] letters = str.toCharArray();
+        HashMap<Character, Integer> lettersMap = new HashMap<>();
+        for (int i = 0; i < letters.length; i++) {
+            Integer number = lettersMap.getOrDefault(letters[i],0);
+            lettersMap.put(letters[i], ++number);
         }
 
-        String charStr = scanner.nextLine();
-        char[] chars = charStr.toCharArray();
-        HashMap<Character, Integer> charMap = new HashMap<>();
-        int questionNum = 0;
-        for(char c : chars){
-            if(charMap.containsKey(c)){
-                Integer num = charMap.get(c);
-                num++;
-                charMap.put(c, num);
-            }else{
-                charMap.put(c, 1);
-            }
-        }
-        int learn = 0;
-        HashMap<Character, Integer> tempMap = new HashMap<>();
-        tempMap.putAll(charMap);
-        for(int i = 0; i < number; i++){
-            boolean cantLearn = true;
-            char[] charArray = words[i].toCharArray();
-            for(char c : charArray){
-                //判断是否包含这个字符如果包含数量-1，不包含看是否有？有则去问扣减万能
-                //当没有字符且万能也不够的时候，跳出循环说明这个单词不会
-                if(tempMap.containsKey(c)){
-                    Integer num = tempMap.get(c);
-                    if(num > 0){
-                        num--;
-                        tempMap.put(c, num);
+        int count = 0;
+        HashMap<Character, Integer> copyMap =  new HashMap<>(lettersMap);
+        for (String word : words) {
+            char[] chars = word.toCharArray();
+            //是否可以完成拼写标识
+            boolean flag = true;
+            for (char ch : chars) {
+                if(copyMap.containsKey(ch)){
+                    int number = copyMap.getOrDefault(ch, 0);
+                    if(number > 0){
+                        copyMap.put(ch, --number);
                         continue;
                     }
                 }
-                if(tempMap.containsKey('?')){
-                    //万能符抵扣
-                    Integer j = tempMap.get('?');
-                    //说明这个单词不会
-                    if(j <= 0){
-                        cantLearn = false;
-                        break;
-                    }
-                    j--;
-                    tempMap.put('?', j);
+                int number = copyMap.getOrDefault('?', 0);
+                if(number == 0){
+                    //无法完成拼写标志位更新
+                    flag = false;
+                    break;
                 }else {
-                    cantLearn = false;
+                    copyMap.put('?', --number);
                 }
-
             }
-            if(cantLearn){
-                learn++;
+            //判定是无法完成拼写还是已经完成拼写
+            if(flag){
+                count++;
             }
-            //重新初始化
-            tempMap = new HashMap<>();
-            tempMap.putAll(charMap);
+            //重置单词数量
+            copyMap = new HashMap<>(lettersMap);
         }
-        System.out.println(learn);
+        System.out.println(count);
     }
 }
