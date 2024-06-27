@@ -76,14 +76,14 @@ public class HJ48 {
         int maxLength = 0;
         while(right < chars.length){
             //优化此处逻辑，原来的判定存在不严谨的问题
-            if(Character.isLowerCase(chars[right]) || Character.isUpperCase(chars[right])){
+            if(Character.isLetter(chars[right])){
                 letterCount++;
             }else{
                 numberCount++;
             }
             if(letterCount > 1){
                 //缩减窗口
-                if(Character.isLowerCase(chars[left]) || Character.isUpperCase(chars[left])){
+                if(Character.isLetter(chars[left])){
                     letterCount--;
                 }else{
                     numberCount--;
