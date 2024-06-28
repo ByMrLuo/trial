@@ -23,16 +23,16 @@ public class HJ54 {
                 strIndex++;
                 longStrindex = i;
                 if(strIndex == strChars.length){
-                    System.out.println(longStrindex);
-                    return;
+                    break;
                 }
             }
         }
+        //根据有效字符的索引变化与否可以判定L字符串中是否存在有效字符
         if(strIndex == 0){
             System.out.println(-1);
-            return;
+        }else{
+            System.out.println(longStrindex);
+
         }
-        //因为最后相等之后还是会有longStrindex++;，所以要-1
-        System.out.println(longStrindex);
     }
 }
